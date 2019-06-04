@@ -24,16 +24,19 @@ Route::get('/error404', function (){
 
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth','userstate'])->group(function () {
 
     Route::get('/mobile/app','MobileController@mobilePage')->name('mobile');
     Route::get('/device/gps','DeviceController@GPSPage')->name('device');
 
-    Route::get('/admin/add','Auth\RegisterController@showAddAdminForm')->name('addAdminPage');
-    Route::post('/admin/add','Auth\RegisterController@registerAdmin')->name('addAdmin');
-    Route::get('/admin/users','Auth\AccountController@viewUserForm')->name('viewUserForm');
-    Route::get('/admin/users/activate/{inactive_user_id}', 'Auth\AccountController@activateUser')->name('activateUser');
-    Route::get('/admin/users/suspend/{active_user_id}', 'Auth\AccountController@suspendUser')->name('suspendUser');
+    Route::middleware(['superuser'])->group(function () {
+
+        Route::get('/admin/add', 'Auth\RegisterController@showAddAdminForm')->name('addAdminPage');
+        Route::post('/admin/add', 'Auth\RegisterController@registerAdmin')->name('addAdmin');
+        Route::get('/admin/users', 'Auth\AccountController@viewUserForm')->name('viewUserForm');
+        Route::get('/admin/users/activate/{inactive_user_id}', 'Auth\AccountController@activateUser')->name('activateUser');
+        Route::get('/admin/users/suspend/{active_user_id}', 'Auth\AccountController@suspendUser')->name('suspendUser');
+    });
 
     Route::get('/account/update_pass','Auth\UpdatePassController@getUpdatePasswordForm')->name('updatePasswordForm');
     Route::post('/account/update_pass','Auth\UpdatePassController@updatePassword')->name('updatePassword');

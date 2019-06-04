@@ -84,16 +84,16 @@ desired effect
                         <!-- Menu toggle button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">10</span>
+                            <span class="label label-warning">0</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">You have 10 notifications</li>
+                            <li class="header">You have 0 notifications</li>
                             <li>
                                 <!-- Inner Menu: contains the notifications -->
                                 <ul class="menu">
                                     <li><!-- start notification -->
                                         <a href="#">
-                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                            <i class="fa fa-users text-aqua"></i> Nothing important
                                         </a>
                                     </li>
                                     <!-- end notification -->
@@ -211,7 +211,7 @@ desired effect
                 <li><a href="{{route('viewUserForm')}}"><i class="fa fa-eye-slash"></i> <span>View Users</span></a></li>
             @elseif(Auth::user()->type == 'uom_adm' or Auth::user()->type == 'ntc_adm')
                 <li><a href="{{route('addAdminPage')}}"><i class="fa fa-plus"></i> <span>Add Admin</span></a></li>
-                <li><a href="{{route('viewUser')}}"><i class="fa fa-eye-slash"></i> <span>View Users</span></a></li>
+                <li><a href="{{route('viewUserForm')}}"><i class="fa fa-eye-slash"></i> <span>View Users</span></a></li>
                 @endif
             </ul>
 
