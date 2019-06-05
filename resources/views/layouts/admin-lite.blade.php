@@ -24,6 +24,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect. -->
     <link rel="stylesheet" href="{{asset('admin-lte/dist/css/skins/skin-blue.min.css')}}">
+    <link rel="stylesheet" href="{{asset('admin-lte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+    <link rel="stylesheet" href="{{asset('admin-lte/bower_components/select2/dist/css/select2.min.css')}}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -183,13 +185,18 @@ desired effect
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">Menue</li>
                 <!-- Optionally, you can add icons to the links -->
+                <li>
+                    <a href="{{route('home')}}">
+                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                    </a>
+                </li>
                 <li class="active"><a href="{{route('mobile')}}"><i class="fa fa-mobile-phone"></i> <span>Mobile App Data</span></a></li>
                 <li><a href="{{route('device')}}"><i class="fa fa-line-chart"></i> <span>GPS Data</span></a></li>
                 <li class="treeview">
                     <a href="#"><i class="fa fa-gears"></i> <span>Account</span>
                         <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{route('updatePasswordForm')}}"><i class="fa fa-user-secret"></i> <span>Change Password</span> </a></li>
@@ -318,9 +325,15 @@ desired effect
 <script src="{{asset('admin-lte/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('admin-lte/dist/js/adminlte.min.js')}}"></script>
+<script src="{{asset('admin-lte/bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+<!-- bootstrap datepicker -->
+<script src="{{asset('admin-lte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
+<script src="{{asset('admin-lte/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+
+    @yield('additional-js')
 </body>
 </html>
