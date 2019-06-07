@@ -44,3 +44,6 @@ Route::middleware(['auth','userstate'])->group(function () {
     Route::get('/account/update_account','Auth\UpdateAccountController@getUpdateAccountForm')->name('updateAccountForm');
     Route::post('/account/update_account','Auth\UpdateAccountController@updateAccount')->name('updateAccount');
 });
+
+Route::post('/mobile/app','MobileController@getJourneyDetails')->name('getJourney');
+Route::post('/mobile/refresh','MobileController@refresh')->name('refresh');
