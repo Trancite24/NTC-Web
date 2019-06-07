@@ -49,9 +49,14 @@
                     </select>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
                     <button id="exportCSV" class="btn btn-info">Export CSV</button>
+                </div>
+            </div>
+             <div class="col-md-1">
+                <div class="form-group no-bottom-margin">
+                    <button id="preview" class="btn btn-info">preview</button>
                 </div>
             </div>
              <div class="col-md-2">
@@ -111,6 +116,9 @@
     $("#exportCSV").click(function(){
          exportCSV()
     });
+     $("#preview").click(function(){
+         preview()
+    });
 
         var map;
         var markers = []
@@ -130,9 +138,11 @@
         content: '<p>Marker Location:' + marker.getPosition() + '</p>'
         });
     }
+           {{--  icon:"public/images/bus.png",  --}}
     function addMarker(loc) {
         var marker = new google.maps.Marker({
         position: {lat: parseFloat(loc["lat"]), lng: parseFloat(loc["lon"])},
+        icon:"/images/sBus.ico",
         map: map
         });
         infowindow = new google.maps.InfoWindow({
@@ -207,9 +217,7 @@
     var routeId="Trip Id";
     var journeyList=null
     var data=null
-    function exportCSV(data){
-        
-     }
+
     $('#nic').change(function(e){
         nic=this.value
         refreshMap(nic,routeId,date)
@@ -218,17 +226,21 @@
         routeId=this.value
         refreshMap(nic,routeId,date)
     })
-    $('#datepicker').change(function(e){
+    $('#date').change(function(e){
         date=this.value
         refreshMap(nic,routeId,date)
     })
     $('#trip_id').change(function(e){
         trip_id=this.value
         refreshMap(nic,routeId,date)
+    })
+    function preview(){
+        trip_id= $('#trip_id').val()
         deleteMarkers()
         console.log(trip_id)
+        console.log(journeyList)
         for(j=0;j<journeyList.length;j++){
-           if(journeyList[j]["journeyId"]===this.value){
+           if(journeyList[j]["journeyId"]===trip_id){
                 console.log("Equal!!!!!!!!!!!!!!!1")
                 var busstops=journeyList[j]["busstops"]
                 {{--  for(i=0;i<busstops.length;i++){
@@ -238,9 +250,61 @@
                 markMap(busstops)
            }
         }
-       
-      
-    })
+    }
+    function dataPreparation(){
+        var header="nic,route,date,journeyId,busStopTypenone,busstopId,femaleChildIn,femaleChildOut,femaleElderIn,femaleElderOut,femaleWomanIn,femaleWomanOut,femaleYoungIn,femaleYoungOut,inTotal,journeyId,lat,lon,maleChildIn,maleChildOut,maleElderIn,maleElderOut,maleManIn,maleManOut,maleYoungIn,maleYoungOut,name,outTotal,timeStamp,updatedTimen\n"
+        var bodySample=$('#nic').val()+","+$('#route').val()+","+$('#date').val()+","
+        var options=[]
+        var body=""
+        var minisample=""
+        $('#trip_id > option').each(function() {
+            options.push($(this).val())
+        });
+        for(j=0;j<journeyList.length;j++){
+           if(options.includes(journeyList[j]["journeyId"])){
+                console.log("Equal!!!!!!!!!!!!!!!1")
+                minisample=bodySample+journeyList[j]["journeyId"]+","
+                var busstops=journeyList[j]["busstops"]
+                for(i=0;i<busstops.length;i++){
+                    body+=minisample+
+                    busstops[i]["busStopTypenone"]+","
+                    +busstops[i]["busstopId"]+","
+                    +busstops[i]["femaleChildIn"]+","
+                    +busstops[i]["femaleChildOut"]+","
+                    +busstops[i]["femaleElderIn"]+","
+                    +busstops[i]["femaleElderOut"]+","
+                    +busstops[i]["femaleWomanIn"]+","
+                    +busstops[i]["femaleWomanOut"]+","
+                    +busstops[i]["femaleYoungIn"]+","
+                    +busstops[i]["femaleYoungOut"]+","
+                    +busstops[i]["inTotal"]+","
+                    +busstops[i]["journeyId"]+","
+                    +busstops[i]["lat"]+","
+                    +busstops[i]["lon"]+","
+                    +busstops[i]["maleChildIn"]+","
+                    +busstops[i]["maleChildOut"]+","
+                    +busstops[i]["maleElderIn"]+","
+                    +busstops[i]["maleElderOut"]+","
+                    +busstops[i]["maleManIn"]+","
+                    +busstops[i]["maleManOut"]+","
+                    +busstops[i]["maleYoungIn"]+","
+                    +busstops[i]["maleYoungOut"]+","
+                    +busstops[i]["name"]+","
+                    +busstops[i]["outTotal"]+","
+                    +busstops[i]["timeStamp"]+","
+                    +busstops[i]["updatedTime"]+"\n"
+                }
+           }
+        }
+        return header+body
+    }
+    function exportCSV(){
+        var link = document.createElement('a');
+        link.download = 'data.csv';
+        var blob = new Blob([dataPreparation()], {type: 'text/plain'});
+        link.href = window.URL.createObjectURL(blob);
+        link.click();
+     }
     function refreshMap(nic,routeId,date){
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             console.log({_token: CSRF_TOKEN,nic:nic,routeId:routeId,date:date,trip_id:trip_id})
