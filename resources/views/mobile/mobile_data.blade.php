@@ -133,7 +133,7 @@
 
          ){
              console.log(nic+ " "+ trip_id+" "+date+" "+routeId )
-             alert("Please enter the input parameters"+ nic+ " "+ trip_id+" "+date+" "+routeId );
+             alert("Please enter the input parameters" );
          }
          else{
              exportCSV()
@@ -151,8 +151,8 @@
              routeId==="Route"
 
          ){
-            console.log(nic+ " "+ trip_id+" "+date+" "+routeId )
-             alert("Please enter the input parameters"+ nic+ " "+ trip_id+" "+date+" "+routeId );
+            {{--  console.log(nic+ " "+ trip_id+" "+date+" "+routeId )  --}}
+             alert("Please enter the input parameters");
          }
          else{
               preview()
@@ -178,20 +178,19 @@
 
             var x = document.getElementById("nic");
             x.options[x.options.length]= new Option('Surveyors NIC', 'Surveyors NIC');
+             $("#nic option[value='Surveyors NIC']").prop('selected', true);
 
             var y = document.getElementById("date");
             y.options[y.options.length]= new Option('Date', 'Date');
+             $("#nic option[value='Date']").prop('selected', true);
 
             var z = document.getElementById("route");
             z.options[z.options.length]= new Option('Route', 'Route');
+             $("#nic option[value='Route']").prop('selected', true);
 
             var a = document.getElementById("trip_id");
             a.options[a.options.length]= new Option('Trip Id', 'Trip Id');
-
-
-
-
-          
+             $("#nic option[value='Trip Id']").prop('selected', true);
     }
      // Adds a marker to the map and push to the array.
     function addToolTip(marker){
@@ -310,7 +309,7 @@
         myVar = setTimeout(showMap, 1000);
         myFunction()
         trip_id= $('#trip_id').val()
-        if(trip_id===null || typeof trip_id==="undefined"){
+        if(trip_id===null || typeof trip_id==='undefined'){
             alert("No Journey to preview!")
             resetFilters()
         }
@@ -459,7 +458,7 @@
                 success: function (data) { 
                     console.log(data)
                     //empting the nic and append new data
-                    $('#nic').children().remove();
+                    {{--  $('#nic').children().remove();  --}}
                     for(j=0;j<data["nic"].length;j++){
                           var dataOp=data["nic"][j]["nic"]
                           var opt = document.createElement('option');
@@ -468,7 +467,7 @@
                           document.getElementById('nic').appendChild(opt); 
                     }
                     //empting the routes and append new data
-                    $('#route').children().remove();
+                    {{--  $('#route').children().remove();  --}}
                     for(j=0;j<data["routes"].length;j++){
                           var dataOp=data["routes"][j]["routeNo"]
                           var opt = document.createElement('option');
@@ -477,7 +476,7 @@
                           document.getElementById('route').appendChild(opt); 
                     }
                     //empting the dates and append new data
-                    $('#date').children().remove();
+                    {{--  $('#date').children().remove();  --}}
                     for(j=0;j<data["dates"].length;j++){
                           var dataOp=data["dates"][j]["date"]
                           var opt = document.createElement('option');
@@ -486,7 +485,7 @@
                           document.getElementById('date').appendChild(opt); 
                     }
                      //empting the trip Ids and append new data
-                    $('#trip_id').children().remove();
+                    {{--  $('#trip_id').children().remove();  --}}
                     journeyList=data["trips"]
                     for(j=0;j<data["trips"].length;j++){
                           var dataOp=data["trips"][j]["journeyId"]
@@ -496,6 +495,7 @@
                           opt.value=data["trips"][j]["journeyId"]
                           document.getElementById('trip_id').appendChild(opt); 
                     }
+                    {{--  callback;  --}}
                 }
             });     
         };    
