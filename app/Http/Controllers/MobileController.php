@@ -15,12 +15,13 @@ class MobileController extends Controller
 
         //TODO get the unique nics, trip_ids, routes from database and set to the variables;
         $nics= DB::Table('journey')->select('nic')->distinct()->get();
-        $trip_ids = DB::Table('busstop')->select('journeyId')->distinct()->get();
+        $trip_ids = DB::Table('journey')->select('journeyId','fromName','toName')->distinct()->get();
         // $trip_ids =Journey::with('busstops')->select('journeyId')->distinct()->get();
         $dates=DB::Table('journey')->select('date')->distinct()->get();
         $routes =DB::Table('journey')->select('routeNo')->distinct()->get();
 
         return view('mobile.mobile_data')->with('nics',$nics)->with('trip_ids', $trip_ids)->with('routes',$routes)->with('dates',$dates);
+    
     }
 
     public function getJourneyDetails(Request $request){
@@ -32,15 +33,15 @@ class MobileController extends Controller
         if ($nic!="Surveyors NIC" && $nic!="") {
             $query=$query->where('nic',$nic);
         }
-        // if ($routeId!="Route" and $routeId!="Trip Id" && $routeId!="") {
-        //     $query=$query->where('routeNo',$routeId);
-        // }
-        // if ($date!="Date" and $date!=Null && $date!="") {
-        //     $query=$query->where('date',$date);
-        // }
-        // if ($tripId!="Trip Id" && $tripId!="") {
-        //     $query=$query->where('journeyId',$tripId);
-        // }
+        if ($routeId!="Route" && $routeId!="") {
+            $query=$query->where('routeNo',$routeId);
+        }
+        if ($date!="Date" && $date!="") {
+            $query=$query->where('date',$date);
+        }
+        if ($tripId!="Trip Id" && $tripId!="") {
+            $query=$query->where('journeyId',$tripId);
+        }
         $res=$query->get();
         // var_dump("test "+$routeId);
         return json_encode([
@@ -48,7 +49,7 @@ class MobileController extends Controller
         'nic'=>$query->select('nic')->distinct()->get(),    
         'routes'=>$query->select('routeNo')->distinct()->get(),
         'dates'=>$query->select('date')->distinct()->get(),
-        'trips'=>$query->select('journeyId')->distinct()->get()
+        'trips'=>$query->select('journeyId','fromName','toName')->distinct()->get()
 
         ]);
 
@@ -71,7 +72,7 @@ class MobileController extends Controller
     public function refresh(Request $request){
         
         $nics= DB::Table('journey')->select('nic')->distinct()->get();
-        $trip_ids = DB::Table('busstop')->select('journeyId')->distinct()->get();
+        $trip_ids = DB::Table('journey')->select('journeyId','fromName','toName')->distinct()->get();
         $dates=DB::Table('journey')->select('date')->distinct()->get();
         $routes =DB::Table('journey')->select('routeNo')->distinct()->get();
         return json_encode([

@@ -58,8 +58,73 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+<body  onload="myFunction()" style="margin:0;" class="hold-transition skin-blue sidebar-mini">
+ <style>
+        /* Center the loader */
+        #loader {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 1;
+        width: 150px;
+        height: 150px;
+        margin: -75px 0 0 -75px;
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+        background:rgba(255,255,255,0.5);
+        }
+
+        @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+        }
+
+        /* Add animation to "page content" */
+        {{--  .animate-bottom {
+        position: relative;
+        -webkit-animation-name: animatebottom;
+        -webkit-animation-duration: 1s;
+        animation-name: animatebottom;
+        animation-duration: 1s
+        }  --}}
+
+        @-webkit-keyframes animatebottom {
+        from { bottom:-100px; opacity:0 } 
+        to { bottom:0px; opacity:1 }
+        }
+
+        @keyframes animatebottom { 
+        from{ bottom:-100px; opacity:0 } 
+        to{ bottom:0; opacity:1 }
+        }
+
+        #myDiv {
+        display: none;
+        }
+        </style>
+        <script>
+        var myVar;
+
+        function myFunction() {
+        myVar = setTimeout(showPage, 1200);
+        }
+
+        function showPage() {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("myDiv").style.display = "block";
+        }
+        </script>
+<div class="wrapper" style="display:block;" id="myDiv">
 
     <!-- Main Header -->
     <header class="main-header">
@@ -84,10 +149,6 @@ desired effect
                     <!-- Notifications Menu -->
                     <li class="dropdown notifications-menu">
                         <!-- Menu toggle button -->
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">0</span>
-                        </a>
                         <ul class="dropdown-menu">
                             <li class="header">You have 0 notifications</li>
                             <li>
@@ -110,14 +171,14 @@ desired effect
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="{{Auth::user()->getFirstMediaUrl('profile_pictures', 'thumb') }}" class="user-image" alt="User Image">
+                            <img src="/images/avatar.png" class="user-image" alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">{{Auth::user()->name}}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="{{Auth::user()->getFirstMediaUrl('profile_pictures', 'thumb') }}" class="img-circle" alt="User Image">
+                                <img src="/images/avatar.png" class="img-circle" alt="User Image">
 
                                 <p>
                                     {{Auth::user()->name}}
@@ -160,7 +221,7 @@ desired effect
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="{{Auth::user()->getFirstMediaUrl('profile_pictures', 'thumb') }}" class="img-circle" alt="User Image">
+                    <img src="/images/avatar.png" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>{{Auth::user()->name}}</p>
@@ -187,24 +248,24 @@ desired effect
                 <!-- Optionally, you can add icons to the links -->
                 <li>
                     <a href="{{route('home')}}">
-                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                        <i class="fa fa-dashboard fa-lg"></i> <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="active"><a href="{{route('mobile')}}"><i class="fa fa-mobile-phone"></i> <span>Mobile App Data</span></a></li>
-                <li><a href="{{route('device')}}"><i class="fa fa-line-chart"></i> <span>GPS Data</span></a></li>
+                <li class="active"><a href="{{route('mobile')}}"><i class="fa fa-mobile-phone fa-lg"></i> <span>Mobile App Data</span></a></li>
+                <li><a href="{{route('device')}}"><i class="fa fa-line-chart fa-lg"></i> <span>GPS Data</span></a></li>
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-gears"></i> <span>Account</span>
+                    <a href="#"><i class="fa fa-gears fa-lg"></i> <span>Account</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
                     </a>
-                    <ul class="treeview-menu">
-                        <li><a href="{{route('updatePasswordForm')}}"><i class="fa fa-user-secret"></i> <span>Change Password</span> </a></li>
-                        <li><a href="{{route('updateAccountForm')}}"><i class="fa fa-pencil"> </i> <span>Update Account</span></a></li>
+                    <ul class="treeview menu-open">
+                        <li><a href="{{route('updatePasswordForm')}}"><i class="fa fa-user-secret fa-lg"></i> <span>Change Password</span> </a></li>
+                        <li><a href="{{route('updateAccountForm')}}"><i class="fa fa-pencil fa-lg"> </i> <span>Update Account</span></a></li>
                         <li><a href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                <i class="fa fa-power-off"> </i> <span>Logout</span>
+                                <i class="fa fa-power-off fa-lg"> </i> <span>Logout</span>
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -214,11 +275,11 @@ desired effect
                     </ul>
                 </li>
             @if(Auth::user()->type == 'super_adm')
-                <li><a href="{{route('addAdminPage')}}"><i class="fa fa-plus"></i> <span>Add Admin</span></a></li>
-                <li><a href="{{route('viewUserForm')}}"><i class="fa fa-eye-slash"></i> <span>View Users</span></a></li>
+                <li><a href="{{route('addAdminPage')}}"><i class="fa fa-plus fa-lg"></i> <span>Add Admin</span></a></li>
+                <li><a href="{{route('viewUserForm')}}"><i class="fa fa-eye-slash fa-lg"></i> <span>View Users</span></a></li>
             @elseif(Auth::user()->type == 'uom_adm' or Auth::user()->type == 'ntc_adm')
-                <li><a href="{{route('addAdminPage')}}"><i class="fa fa-plus"></i> <span>Add Admin</span></a></li>
-                <li><a href="{{route('viewUserForm')}}"><i class="fa fa-eye-slash"></i> <span>View Users</span></a></li>
+                <li><a href="{{route('addAdminPage')}}"><i class="fa fa-plus fa-lg"></i> <span>Add Admin</span></a></li>
+                <li><a href="{{route('viewUserForm')}}"><i class="fa fa-eye-slash fa-lg"></i> <span>View Users</span></a></li>
                 @endif
             </ul>
 
@@ -254,19 +315,19 @@ desired effect
     <!-- Main Footer -->
     <footer class="main-footer">
         <!-- To the right -->
-        <div class="pull-right hidden-xs">
+        {{--  <div class="pull-right hidden-xs">
             Tachyon - Faster Than Light
-        </div>
+        </div>  --}}
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2019 <a href="https://tachyontec.io">Tachyon Technologies</a>.</strong>
+        <strong>Copyright &copy; 2019 <a href="https://Trancite24.com">Trancite24</a>.</strong>
     </footer>
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-            <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+            <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home fa-2x"></i></a></li>
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears fa-lg"></i></a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
@@ -315,6 +376,7 @@ desired effect
     immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
+<div id="loader"></div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->

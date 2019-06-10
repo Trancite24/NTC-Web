@@ -1,13 +1,14 @@
 @extends('layouts.admin-lite')
 @section('title')
-    Home
+    Mobile App Data
 @endsection
 @section('page-header')
-    Home
+    Mobile App Data
 @endsection
 @section('optional-header')
 @endsection
 @section('level')
+        <br />
         <div class="row">
             <div class="col-md-2">
                 <div class="form-group no-bottom-margin">
@@ -44,31 +45,33 @@
                     <select class="form-control select2" style="width: 100%;" id="trip_id" name="trip_id">
                         <option selected="selected">Trip Id</option>
                         @foreach($trip_ids as $tripid)
-                            <option>{{$tripid->journeyId}}</option>
+                            <option value={{$tripid->journeyId}}>{{$tripid->fromName}} - {{$tripid->toName}}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
-            <div class="col-md-1">
-                <div class="form-group no-bottom-margin">
-                    <button id="exportCSV" class="btn btn-info">Export CSV</button>
-                </div>
-            </div>
+           
              <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
                     <button id="preview" class="btn btn-info">preview</button>
                 </div>
             </div>
-             <div class="col-md-2">
+             <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
-                    <button id="resetFilters" class="btn btn-info">Reset Filters</button>
+                    <button id="resetFilters" class="btn btn-info">Reset</button>
+                </div>
+            </div>
+             <div class="col-md-1">
+                <div class="form-group no-bottom-margin">
+                    <button id="exportCSV" class="btn btn-info">Export CSV</button>
                 </div>
             </div>
         </div>
+                <br />
 @endsection
 @section('content')
     <div class="container">
-        <div class="row justify-content-center" id="map">
+        <div class="row justify-content-center" id="map" onload="myFunction()">
         </div>
     </div>
     <style>
@@ -111,13 +114,49 @@
     
     //button reset filters
     $("#resetFilters").click(function(){
+         deleteMarkers()
+         addDefaults()
          resetFilters()
+         
+         
     });
     $("#exportCSV").click(function(){
-         exportCSV()
+        nic=$("#nic").val();
+        trip_id=$("#trip_id").val();
+        date=$("#date").val();
+        routeId=$("#route").val();
+          if(
+             nic==="Surveyors NIC" ||
+             trip_id==="Trip Id"||
+             date==="Date"||
+             routeId==="Route"
+
+         ){
+             console.log(nic+ " "+ trip_id+" "+date+" "+routeId )
+             alert("Please enter the input parameters"+ nic+ " "+ trip_id+" "+date+" "+routeId );
+         }
+         else{
+             exportCSV()
+         }
     });
      $("#preview").click(function(){
-         preview()
+        nic=$("#nic").val();
+        trip_id=$("#trip_id").val();
+        date=$("#date").val();
+        routeId=$("#route").val();
+         if(
+             nic==="Surveyors NIC" ||
+             trip_id==="Trip Id"||
+             date==="Date"||
+             routeId==="Route"
+
+         ){
+            console.log(nic+ " "+ trip_id+" "+date+" "+routeId )
+             alert("Please enter the input parameters"+ nic+ " "+ trip_id+" "+date+" "+routeId );
+         }
+         else{
+              preview()
+         }
     });
 
         var map;
@@ -131,7 +170,29 @@
       
     };
    
+    function addDefaults(){
+          $('#date').children().remove();
+          $('#route').children().remove();
+          $('#nic').children().remove();
+          $('#trip_id').children().remove();
 
+            var x = document.getElementById("nic");
+            x.options[x.options.length]= new Option('Surveyors NIC', 'Surveyors NIC');
+
+            var y = document.getElementById("date");
+            y.options[y.options.length]= new Option('Date', 'Date');
+
+            var z = document.getElementById("route");
+            z.options[z.options.length]= new Option('Route', 'Route');
+
+            var a = document.getElementById("trip_id");
+            a.options[a.options.length]= new Option('Trip Id', 'Trip Id');
+
+
+
+
+          
+    }
      // Adds a marker to the map and push to the array.
     function addToolTip(marker){
         var infowindow = new google.maps.InfoWindow({
@@ -209,47 +270,66 @@
         setMapOnAll(map);
       }
 
- 
-
     var nic="Surveyors NIC";
-    var trip_id="Route";
-    var date=null;
-    var routeId="Trip Id";
+    var trip_id="Trip Id";
+    var date="Date";  
+    var routeId="Route";
     var journeyList=null
     var data=null
 
+    function showMap() {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("map").style.display = "block";
+    }
     $('#nic').change(function(e){
+        document.getElementById("loader").style.display = "block";
+        myVar = setTimeout(showMap, 1000);
         nic=this.value
         refreshMap(nic,routeId,date)
     })
     $('#route').change(function(e){
+        document.getElementById("loader").style.display = "block";
+        myVar = setTimeout(showMap, 1000);
         routeId=this.value
         refreshMap(nic,routeId,date)
     })
     $('#date').change(function(e){
+        document.getElementById("loader").style.display = "block";
+        myVar = setTimeout(showMap, 1000);
         date=this.value
         refreshMap(nic,routeId,date)
     })
     $('#trip_id').change(function(e){
+        document.getElementById("loader").style.display = "block";
+        myVar = setTimeout(showMap, 1000);
         trip_id=this.value
         refreshMap(nic,routeId,date)
     })
     function preview(){
+        document.getElementById("loader").style.display = "block";
+        myVar = setTimeout(showMap, 1000);
+        myFunction()
         trip_id= $('#trip_id').val()
-        deleteMarkers()
-        console.log(trip_id)
-        console.log(journeyList)
-        for(j=0;j<journeyList.length;j++){
-           if(journeyList[j]["journeyId"]===trip_id){
-                console.log("Equal!!!!!!!!!!!!!!!1")
-                var busstops=journeyList[j]["busstops"]
-                {{--  for(i=0;i<busstops.length;i++){
-                    console.log(busstops[i]["lat"]+" "+busstops[i]["lon"])
-                }  --}}
-                console.log(busstops)
-                markMap(busstops)
-           }
+        if(trip_id===null || typeof trip_id==="undefined"){
+            alert("No Journey to preview!")
+            resetFilters()
         }
+        else{
+            console.log(trip_id)
+            console.log(journeyList)
+            for(j=0;j<journeyList.length;j++){
+            if(journeyList[j]["journeyId"]===trip_id){
+                    console.log("Equal!!!!!!!!!!!!!!!1")
+                    var busstops=journeyList[j]["busstops"]
+                    {{--  for(i=0;i<busstops.length;i++){
+                        console.log(busstops[i]["lat"]+" "+busstops[i]["lon"])
+                    }  --}}
+                    console.log(busstops)
+                    markMap(busstops)
+            }
+            }
+        }
+       
     }
     function dataPreparation(){
         var header="nic,route,date,journeyId,busStopTypenone,busstopId,femaleChildIn,femaleChildOut,femaleElderIn,femaleElderOut,femaleWomanIn,femaleWomanOut,femaleYoungIn,femaleYoungOut,inTotal,journeyId,lat,lon,maleChildIn,maleChildOut,maleElderIn,maleElderOut,maleManIn,maleManOut,maleYoungIn,maleYoungOut,name,outTotal,timeStamp,updatedTimen\n"
@@ -299,6 +379,8 @@
         return header+body
     }
     function exportCSV(){
+        document.getElementById("loader").style.display = "block";
+        myVar = setTimeout(showMap, 1000);
         var link = document.createElement('a');
         link.download = 'data.csv';
         var blob = new Blob([dataPreparation()], {type: 'text/plain'});
@@ -306,6 +388,8 @@
         link.click();
      }
     function refreshMap(nic,routeId,date){
+            myFunction()
+            {{--  alert(nic+" "+routeId+" "+date)  --}}
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             console.log({_token: CSRF_TOKEN,nic:nic,routeId:routeId,date:date,trip_id:trip_id})
             $.ajax({
@@ -350,9 +434,11 @@
                     $('#trip_id').children().remove();
                     journeyList=data["trips"]
                     for(j=0;j<data["trips"].length;j++){
-                          var dataOp=data["trips"][j]["journeyId"]
+                        console.log(data["trips"][j]);
+                          var dataOp=data["trips"][j]["fromName"]+"-"+ data["trips"][j]["toName"]
                           var opt = document.createElement('option');
                           opt.appendChild( document.createTextNode(dataOp));
+                          opt.text=data["trips"][j]["fromName"]+"-"+data["trips"][j]["toName"]
                           opt.value=data["trips"][j]["journeyId"]
                           document.getElementById('trip_id').appendChild(opt); 
                     }
@@ -364,8 +450,8 @@
 
             $.ajax({
                 /* the route pointing to the post function */
-                url: '/mobile/freshData',
-                type: 'get',
+                url: '/mobile/refresh',
+                type: 'post',
                 /* send the csrf-token and the input to the controller ,trip_id:trip_id */
                 data: {_token: CSRF_TOKEN},
                 dataType: 'JSON',
@@ -406,6 +492,7 @@
                           var dataOp=data["trips"][j]["journeyId"]
                           var opt = document.createElement('option');
                           opt.appendChild( document.createTextNode(dataOp));
+                          opt.text=data["trips"][j]["fromName"]+"-"+data["trips"][j]["toName"]
                           opt.value=data["trips"][j]["journeyId"]
                           document.getElementById('trip_id').appendChild(opt); 
                     }
