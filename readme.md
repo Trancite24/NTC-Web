@@ -2,7 +2,9 @@ Deploying
 
 Set environment variables;
 
-generate app key and set the app key.
+generate app key and set the app key. 
+
+run ``php artisan key:generate``
 
 run ``php artisan migrate`` to make the database tables.
 
