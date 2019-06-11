@@ -188,10 +188,11 @@ desired effect
 
                             <!-- Menu Footer-->
                             <li class="user-footer">
-                                <div class="pull-left">
+                                <!-- <div class="pull-left">
                                     <a href="#" class="btn btn-default btn-flat">Profile</a>
-                                </div>
-                                <div class="pull-right">
+                                </div> -->
+                                <div class="row">
+                                    <div class="col-md-4 col-md-offset-4">
                                     <a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -200,7 +201,10 @@ desired effect
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
-                                    </form>                                </div>
+                                    </form>                                
+                                </div>
+                                </div>
+                                
                             </li>
                         </ul>
                     </li>

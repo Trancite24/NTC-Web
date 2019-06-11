@@ -25,10 +25,10 @@
                 <div class="d-flex justify-content-around">
                     <div>
                         <!-- Remember me -->
-                        <div class="custom-control custom-checkbox">
+                       <!--  <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="custom-control-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                             <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
-                        </div>
+                        </div> -->
                     </div>
                     <div>
                         <!-- Forgot password -->
