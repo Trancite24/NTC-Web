@@ -255,8 +255,8 @@ desired effect
                         <i class="fa fa-dashboard fa-lg"></i> <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="active"><a href="{{route('mobile')}}"><i class="fa fa-mobile-phone fa-lg"></i> <span>Mobile App Data</span></a></li>
-                <li><a href="{{route('device')}}"><i class="fa fa-line-chart fa-lg"></i> <span>GPS Data</span></a></li>
+                <li class="active"><a href="{{route('mobile')}}"><i class="fa fa-mobile-phone fa-lg"></i> <span>Survey Mobile Data</span></a></li>
+                <li><a href="{{route('device')}}"><i class="fa fa-line-chart fa-lg"></i> <span>Survey GPS Data</span></a></li>
                 <li class="treeview">
                     <a href="#"><i class="fa fa-gears fa-lg"></i> <span>Account</span>
                         <span class="pull-right-container">

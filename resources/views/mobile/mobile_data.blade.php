@@ -1,9 +1,9 @@
 @extends('layouts.admin-lite')
 @section('title')
-    Mobile App Data
+    Survey Mobile Data
 @endsection
 @section('page-header')
-    Mobile App Data
+    Survey Mobile Data
 @endsection
 @section('optional-header')
 @endsection
@@ -74,6 +74,30 @@
         <div class="row justify-content-center" id="map" onload="myFunction()">
         </div>
     </div>
+
+    <div class="modal fade" id="parameters-error-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center">Error In input Parameters</h4>
+              </div>
+              <div class="modal-body">
+                  <img src="/images/error.png" class="center-block" style="width: 100px">
+                  <h4 class="modal-title text-center">Check Input Parameters and try again</h4>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+
     <style>
         /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
@@ -144,7 +168,7 @@
 
          ){
              console.log(nic+ " "+ trip_id+" "+date+" "+routeId )
-             alert("Please enter the input parameters" );
+             $('#parameters-error-modal').modal('show');
          }
          else{
              exportCSV()
@@ -163,7 +187,7 @@
 
          ){
             {{--  console.log(nic+ " "+ trip_id+" "+date+" "+routeId )  --}}
-             alert("Please enter the input parameters");
+             $('#parameters-error-modal').modal('show');
          }
          else{
               preview()
