@@ -66,8 +66,8 @@ desired effect
         left: 50%;
         top: 50%;
         z-index: 1;
-        width: 150px;
-        height: 150px;
+        width: 80px;
+        height: 80px;
         margin: -75px 0 0 -75px;
         border: 16px solid #f3f3f3;
         border-radius: 50%;

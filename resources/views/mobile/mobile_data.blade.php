@@ -53,17 +53,17 @@
            
              <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
-                    <button id="preview" class="btn btn-info">preview</button>
+                    <button  style="width: 90px; height: 35px;" id="preview" class="btn btn-info">preview</button>
                 </div>
             </div>
              <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
-                    <button id="resetFilters" class="btn btn-info">Reset</button>
+                    <button style="width: 90px; height: 35px;" id="resetFilters" class="btn btn-info">Reset</button>
                 </div>
             </div>
              <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
-                    <button id="exportCSV" class="btn btn-info">Export CSV</button>
+                    <button style="width: 90px; height: 35px;" id="exportCSV" class="btn btn-info">Export CSV</button>
                 </div>
             </div>
         </div>
@@ -114,6 +114,17 @@
     
     //button reset filters
     $("#resetFilters").click(function(){
+        
+        $("#nic").val("Surveyors NIC")
+        $("#trip_id").val("Trip Id")
+       $("#date").val("Date") 
+        $("#route").val("Route")
+
+        nic="Surveyors NIC";
+        trip_id="Trip Id";
+        date="Date";  
+        routeId="Route";
+        
          deleteMarkers()
          addDefaults()
          resetFilters()
@@ -275,38 +286,96 @@
     var routeId="Route";
     var journeyList=null
     var data=null
+    var currentDropDown=""
 
     function showMap() {
         document.getElementById("loader").style.display = "none";
         document.getElementById("map").style.display = "block";
     }
     $('#nic').change(function(e){
+         $(this).find('option').not(':selected').remove();
+        {{--  if(
+             trip_id==="Trip Id"||
+             date==="Date"||
+             routeId==="Route"
+
+         ){
+             currentDropDown='#nic'
+        }
+         if(currentDropDown==='#nic'){
+            var trip_id="Trip Id";
+            var date="Date";  
+            var routeId="Route";
+        }  --}}
         document.getElementById("loader").style.display = "block";
-        myVar = setTimeout(showMap, 1000);
+        {{--  myVar = setTimeout(showMap, 1000);  --}}
         nic=this.value
-        refreshMap(nic,routeId,date)
+        refreshMap('nic')
     })
     $('#route').change(function(e){
+         $(this).find('option').not(':selected').remove();
+        {{--  if(
+             nic==="Surveyors NIC" ||
+             trip_id==="Trip Id"||
+             date==="Date"
+
+         ){
+            currentDropDown='#route'
+        }
+         if(currentDropDown==='#route'){
+            var nic="Surveyors NIC";
+            var trip_id="Trip Id";
+            var date="Date";  
+        }  --}}
         document.getElementById("loader").style.display = "block";
-        myVar = setTimeout(showMap, 1000);
+        {{--  myVar = setTimeout(showMap, 1000);  --}}
         routeId=this.value
-        refreshMap(nic,routeId,date)
+        {{--  alert(nic+" "+routeId+" "+trip_id+" "+date)  --}}
+        refreshMap('route')
     })
     $('#date').change(function(e){
+         $(this).find('option').not(':selected').remove();
+        {{--  if(
+             nic==="Surveyors NIC" ||
+             trip_id==="Trip Id"||
+             routeId==="Route"
+
+         ){
+             currentDropDown='#date'
+        }
+        if(currentDropDown==='#date'){
+            var nic="Surveyors NIC";
+            var trip_id="Trip Id";
+            var routeId="Route";
+        }  --}}
         document.getElementById("loader").style.display = "block";
-        myVar = setTimeout(showMap, 1000);
+        {{--  myVar = setTimeout(showMap, 1000);  --}}
         date=this.value
-        refreshMap(nic,routeId,date)
+        refreshMap('date')
     })
     $('#trip_id').change(function(e){
+         $(this).find('option').not(':selected').remove();
+        {{--  if(
+             nic==="Surveyors NIC" ||
+             date==="Date"||
+             routeId==="Route"
+
+         ){
+             currentDropDown='#trip_id'
+        }
+        if(currentDropDown==='#trip_id'){
+            var nic="Surveyors NIC";
+            var date="Date";  
+            var routeId="Route";
+        }  --}}
         document.getElementById("loader").style.display = "block";
-        myVar = setTimeout(showMap, 1000);
+        {{--  myVar = setTimeout(showMap, 1000);  --}}
         trip_id=this.value
-        refreshMap(nic,routeId,date)
+        refreshMap('trip_id')
     })
     function preview(){
         document.getElementById("loader").style.display = "block";
-        myVar = setTimeout(showMap, 1000);
+        {{--  myVar = setTimeout(showMap, 1000);  --}}
         myFunction()
         trip_id= $('#trip_id').val()
         if(trip_id===null || typeof trip_id==='undefined'){
@@ -386,7 +455,7 @@
         link.href = window.URL.createObjectURL(blob);
         link.click();
      }
-    function refreshMap(nic,routeId,date){
+    function refreshMap(dropId){
             myFunction()
             {{--  alert(nic+" "+routeId+" "+date)  --}}
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -400,39 +469,64 @@
                 dataType: 'JSON',
                 /* remind that 'data' is the response of the AjaxController */
                 success: function (data) {
-                    data=data
+                    showMap()
+                    data=data   
+                    {{--  alert(data["date"]+data["nic"]+data["trips"])  --}}
                     //console.log(data)
                     //empting the nic and append new data
-                    {{--  $('#nic').children().remove();
-                    for(j=0;j<data["nic"].length;j++){
-                          var dataOp=data["nic"][j]["nic"]
-                          var opt = document.createElement('option');
-                          opt.appendChild( document.createTextNode(dataOp));
-                          opt.value =dataOp; 
-                          document.getElementById('nic').appendChild(opt); 
-                    }  --}}
+                    if(dropId==='nic'){
+                          $('#route').children().remove();
+                          $('#date').children().remove();
+                          $('#trip_id').children().remove();
+                    }
+                    else if(dropId==='route'){
+                        $('#nic').children().remove();
+                          $('#date').children().remove();
+                          $('#trip_id').children().remove();
+                    }
+                    else if(dropId==='date'){
+                        $('#route').children().remove();
+                          $('#nic').children().remove();
+                          $('#trip_id').children().remove();
+                    }
+                    else if(dropId==='trip_id'){
+                        $('#route').children().remove();
+                          $('#date').children().remove();
+                          $('#nic').children().remove();
+                    }
+                     if(dropId!='nic'){
+                        for(j=0;j<data["nic"].length;j++){
+                            var dataOp=data["nic"][j]["nic"]
+                            var opt = document.createElement('option');
+                            opt.appendChild( document.createTextNode(dataOp));
+                            opt.value =dataOp; 
+                            document.getElementById('nic').appendChild(opt); 
+                        } 
+                     }
                     //empting the routes and append new data
-                    $('#route').children().remove();
-                    for(j=0;j<data["routes"].length;j++){
+                    if(dropId!='route'){
+                     for(j=0;j<data["routes"].length;j++){
                           var dataOp=data["routes"][j]["routeNo"]
                           var opt = document.createElement('option');
                           opt.appendChild( document.createTextNode(dataOp));
                           opt.value =dataOp; 
                           document.getElementById('route').appendChild(opt); 
+                      }
                     }
                     //empting the dates and append new data
-                    $('#date').children().remove();
-                    for(j=0;j<data["dates"].length;j++){
+                    if(dropId!='date'){
+                      for(j=0;j<data["dates"].length;j++){
                           var dataOp=data["dates"][j]["date"]
                           var opt = document.createElement('option');
                           opt.appendChild( document.createTextNode(dataOp));
                           opt.value =dataOp; 
                           document.getElementById('date').appendChild(opt); 
+                      }
                     }
                      //empting the trip Ids and append new data
-                    $('#trip_id').children().remove();
                     journeyList=data["trips"]
-                    for(j=0;j<data["trips"].length;j++){
+                    if(dropId!='trip_id'){
+                        for(j=0;j<data["trips"].length;j++){
                         console.log(data["trips"][j]);
                           var dataOp=data["trips"][j]["fromName"]+"-"+ data["trips"][j]["toName"]
                           var opt = document.createElement('option');
@@ -440,11 +534,16 @@
                           opt.text=data["trips"][j]["fromName"]+"-"+data["trips"][j]["toName"]
                           opt.value=data["trips"][j]["journeyId"]
                           document.getElementById('trip_id').appendChild(opt); 
+                     }
                     }
+                },
+                error:function (jqXHR, textStatus, errorThrown) { 
+                   alert("We got an error processing the request")
                 }
             });     
         }; 
         function resetFilters(){
+             document.getElementById("loader").style.display = "block";
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
             $.ajax({
@@ -457,6 +556,7 @@
                 /* remind that 'data' is the response of the AjaxController */
                 success: function (data) { 
                     console.log(data)
+                    showMap()
                     //empting the nic and append new data
                     {{--  $('#nic').children().remove();  --}}
                     for(j=0;j<data["nic"].length;j++){
