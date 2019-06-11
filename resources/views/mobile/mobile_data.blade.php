@@ -53,17 +53,17 @@
            
              <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
-                    <button  style="width: 90px; height: 35px;" id="preview" class="btn btn-info">preview</button>
+                    <button  style="width: 90px; height: 35px; margin-left: 5px" id="preview" class="btn btn-info">preview</button>
                 </div>
             </div>
              <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
-                    <button style="width: 90px; height: 35px;" id="resetFilters" class="btn btn-info">Reset</button>
+                    <button style="width: 90px; height: 35px; margin-left: 5px" id="resetFilters" class="btn btn-info">Reset</button>
                 </div>
             </div>
              <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
-                    <button style="width: 90px; height: 35px;" id="exportCSV" class="btn btn-info">Export CSV</button>
+                    <button style="width: 90px; height: 35px; margin-left: 5px" id="exportCSV" class="btn btn-info">Export CSV</button>
                 </div>
             </div>
         </div>
