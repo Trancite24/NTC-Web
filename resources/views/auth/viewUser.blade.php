@@ -15,15 +15,6 @@
 @endsection
 @section('content')
     <div class="container">
-        @isset($suspended_user)
-            <div class="card-header" style="color: yellow; font-size: large">Successfully Suspend {{$suspended->email }}</div>
-        @endisset
-        @isset($activated_user)
-            <div class="card-header" style="color: green; font-size: large">Successfully Activated {{$activated_user->email }}</div>
-        @endisset
-        @isset($failed_user)
-            <div class="card-header" style="color: red; font-size: large">Failed No permission to suspend/activate {{$failed_user->email }}</div>
-        @endisset
         <div class="row justify-content-center">
             @foreach($active_users as $active_user)
                 <div class="col-lg-3 col-xs-6">
@@ -64,4 +55,70 @@
             @endforeach
         </div>
     </div>
+
+
+ <div class="modal fade" id="parameters-success-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                      @isset($suspended_user)
+                      <h4 class="modal-title text-center">Success</h4>
+                      @endisset
+                      @isset($failed_user)
+                      <h4 class="modal-title text-center">Invalid Operation</h4>
+                      @endisset
+                      @isset($activated_user)
+                      <h4 class="modal-title text-center">Success</h4>
+                      @endisset
+                  </div>
+              <div class="modal-body">
+                    @isset($suspended_user)
+                      <img src="/images/success.png" class="center-block" style="width: 100px">
+                      <h4 class="modal-title text-center">User with email id: {{$suspended_user->email}} successfully Suspended from system</h4>
+                      @endisset
+                    @isset($failed_user)
+                      <img src="/images/error.png" class="center-block" style="width: 100px">
+                      <h4 class="modal-title text-center">You don't have permission to take action on User with email id: {{$failed_user->email}}</h4>
+                      @endisset
+                    @isset($activated_user)
+                      <img src="/images/success.png" class="center-block" style="width: 100px">
+                      <h4 class="modal-title text-center">User with email id: {{$activated_user->email}} successfully Modified</h4>
+                      @endisset
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+@endsection
+
+@section('additional-js')
+        @isset($suspended_user)
+        <script type="text/javascript">
+            
+            $('#parameters-success-modal').modal('show');
+
+        </script>
+        @endisset
+        @isset($activated_user)
+        <script type="text/javascript">
+            
+            $('#parameters-success-modal').modal('show');
+
+        </script>
+        @endisset
+        @isset($failed_user)
+        <script type="text/javascript">
+            
+            $('#parameters-success-modal').modal('show');
+
+        </script>
+        @endisset
 @endsection

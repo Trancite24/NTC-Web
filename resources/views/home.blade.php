@@ -19,15 +19,13 @@
         <div class="col-md-8">
             <div class="card">
                 {{--  <div class="card-header"></div>  --}}
-                {{--  <div class="card-body">
+                <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-warning" role="alert">
                             {{ session('status') }}
                         </div>
                     @else
-                        You are logged in!
-                    @endif
-                </div>  --}}
+                </div>
             </div>
              <div class="row">
                 <div class="col-lg-3 col-xs-8">
@@ -79,6 +77,7 @@
                 </div> 
             </div>             
 
+                    @endif
 
 
         </div>

@@ -323,7 +323,7 @@ desired effect
             Version 0.9.1
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2019 <a href="https://www.trancite24.com">Trancite24 (Pvt.) Ltd.</a>.</strong>
+        <strong>Copyright &copy; 2019 <a href="http://www.trancite24.com">Trancite24 (Pvt) Ltd.</a></strong>
     </footer>
 
     <!-- Control Sidebar -->
