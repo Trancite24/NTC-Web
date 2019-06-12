@@ -450,7 +450,7 @@
         document.getElementById("loader").style.display = "block";
         myVar = setTimeout(showMap, 1000);
         var link = document.createElement('a');
-        link.download = 'data.csv';
+        link.download = 'data.xlsx';
         var blob = new Blob([dataPreparation()], {type: 'text/plain'});
         link.href = window.URL.createObjectURL(blob);
         link.click();
