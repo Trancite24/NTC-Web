@@ -130,7 +130,7 @@ desired effect
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="{{route('home')}}" class="logo">
+        <a href="{{route('home')}}" class="logo" style="background-color: #84063A">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>NTC</b>W</span>
             <!-- logo for regular state and mobile devices -->
@@ -138,7 +138,7 @@ desired effect
         </a>
 
         <!-- Header Navbar -->
-        <nav class="navbar navbar-static-top" role="navigation">
+        <nav class="navbar navbar-static-top" role="navigation" style="background-color: #84063A">
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
@@ -255,21 +255,21 @@ desired effect
                         <i class="fa fa-dashboard fa-lg"></i> <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="active"><a href="{{route('mobile')}}"><i class="fa fa-mobile-phone fa-lg"></i> <span>Mobile App Data</span></a></li>
-                <li><a href="{{route('device')}}"><i class="fa fa-line-chart fa-lg"></i> <span>GPS Data</span></a></li>
+                <li class="active"><a href="{{route('mobile')}}"><i class="fa fa-mobile-phone fa-lg"></i> <span>Track Survey Data</span></a></li>
+                <li><a href="{{route('device')}}"><i class="fa fa-line-chart fa-lg"></i> <span>Track GPS Data</span></a></li>
                 <li class="treeview">
                     <a href="#"><i class="fa fa-gears fa-lg"></i> <span>Account</span>
-                        <span class="pull-right-container">
+                       <!--  <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
-                        </span>
+                        </span> -->
                     </a>
-                    <ul class="treeview menu-open">
-                        <li><a href="{{route('updatePasswordForm')}}"><i class="fa fa-user-secret fa-lg"></i> <span>Change Password</span> </a></li>
-                        <li><a href="{{route('updateAccountForm')}}"><i class="fa fa-pencil fa-lg"> </i> <span>Update Account</span></a></li>
+                    <ul class="treeview menu-open" style="padding-left: 35px">
+                        <li><a href="{{route('updatePasswordForm')}}"><i class="fa fa-user-secret"></i> <span>Change Password</span> </a></li>
+                        <li><a href="{{route('updateAccountForm')}}"><i class="fa fa-pencil"> </i> <span>Update Account</span></a></li>
                         <li><a href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                <i class="fa fa-power-off fa-lg"> </i> <span>Logout</span>
+                                <i class="fa fa-power-off"> </i> <span>Logout</span>
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -279,10 +279,10 @@ desired effect
                     </ul>
                 </li>
             @if(Auth::user()->type == 'super_adm')
-                <li><a href="{{route('addAdminPage')}}"><i class="fa fa-plus fa-lg"></i> <span>Add Admin</span></a></li>
+                <li><a href="{{route('addAdminPage')}}"><i class="fa fa-plus fa-lg"></i> <span>Register Users</span></a></li>
                 <li><a href="{{route('viewUserForm')}}"><i class="fa fa-eye-slash fa-lg"></i> <span>View Users</span></a></li>
             @elseif(Auth::user()->type == 'uom_adm' or Auth::user()->type == 'ntc_adm')
-                <li><a href="{{route('addAdminPage')}}"><i class="fa fa-plus fa-lg"></i> <span>Add Admin</span></a></li>
+                <li><a href="{{route('addAdminPage')}}"><i class="fa fa-plus fa-lg"></i> <span>Register Users</span></a></li>
                 <li><a href="{{route('viewUserForm')}}"><i class="fa fa-eye-slash fa-lg"></i> <span>View Users</span></a></li>
                 @endif
             </ul>
@@ -293,7 +293,7 @@ desired effect
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper" style="background-color: white">
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
@@ -319,11 +319,11 @@ desired effect
     <!-- Main Footer -->
     <footer class="main-footer">
         <!-- To the right -->
-        {{--  <div class="pull-right hidden-xs">
-            Tachyon - Faster Than Light
-        </div>  --}}
+        <div class="pull-right hidden-xs">
+            Version 0.9.1
+        </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2019 <a href="https://Trancite24.com">Trancite24</a>.</strong>
+        <strong>Copyright &copy; 2019 <a href="http://www.trancite24.com">Trancite24 (Pvt) Ltd.</a></strong>
     </footer>
 
     <!-- Control Sidebar -->

@@ -1,16 +1,18 @@
 @extends('layouts.admin-lite')
 @section('title')
-    Mobile App Data
+    Track Survey data
 @endsection
 @section('page-header')
-    Mobile App Data
+    Track Survey data
 @endsection
 @section('optional-header')
 @endsection
 @section('level')
         <br />
-        <div class="row">
-            <div class="col-md-2">
+        <div class="row" style="border-color: black; border-top-style: solid; border-bottom-style: solid; border-width: 1px">
+            <div class="col-md-2" style="padding-right:0px">
+              <div class="form-group text-center">
+                <label>NIC</label>
                 <div class="form-group no-bottom-margin">
                     <select class="form-control select2" style="width: 100%;" id="nic" name="nic">
                         <option selected="selected">Surveyors NIC</option>
@@ -19,8 +21,11 @@
                             @endforeach
                     </select>
                 </div>
+              </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" style="padding-right:0px">
+              <div class="form-group text-center">
+                <label>Route Id</label>
                 <div class="form-group no-bottom-margin">
                     <select class="form-control select2" style="width: 100%;" id="route" name="route">
                         <option selected="selected">Route</option>
@@ -29,8 +34,11 @@
                         @endforeach
                     </select>
                 </div>
+              </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" style="padding-right:0px">
+              <div class="form-group text-center">
+                <label>Journey Date</label>
                 <div class="form-group no-bottom-margin">
                      <select class="form-control select2" style="width: 100%;" id="date" name="route">
                         <option selected="selected">Date</option>
@@ -39,8 +47,11 @@
                         @endforeach
                     </select>
                 </div>
+              </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" style="padding-right:0px">
+              <div class="form-group text-center">
+                <label>Trip Id</label>
                 <div class="form-group no-bottom-margin">
                     <select class="form-control select2" style="width: 100%;" id="trip_id" name="trip_id">
                         <option selected="selected">Trip Id</option>
@@ -49,36 +60,61 @@
                         @endforeach
                     </select>
                 </div>
+              </div>
             </div>
            
              <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
-                    <button  style="width: 90px; height: 35px;" id="preview" class="btn btn-info">preview</button>
+                    <button  style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="preview" class="btn btn-info">Visualise</button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group no-bottom-margin">
+                    <button style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="exportCSV" class="btn btn-info">Download</button>
                 </div>
             </div>
              <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
-                    <button style="width: 90px; height: 35px;" id="resetFilters" class="btn btn-info">Reset</button>
-                </div>
-            </div>
-             <div class="col-md-1">
-                <div class="form-group no-bottom-margin">
-                    <button style="width: 90px; height: 35px;" id="exportCSV" class="btn btn-info">Export CSV</button>
+                    <button style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="resetFilters" class="btn btn-info">Reset</button>
                 </div>
             </div>
         </div>
-                <br />
+        <br />
 @endsection
 @section('content')
     <div class="container">
         <div class="row justify-content-center" id="map" onload="myFunction()">
         </div>
     </div>
+
+    <div class="modal fade" id="parameters-error-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center">Error In input Parameters</h4>
+              </div>
+              <div class="modal-body">
+                  <img src="/images/error.png" class="center-block" style="width: 100px">
+                  <h4 class="modal-title text-center">Check Input Parameters and try again</h4>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+
+
     <style>
         /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
         #map {
-            height: 500px;
+            height: 800px;
         }
         /* Optional: Makes the sample page fill the window. */
         html, body {
@@ -144,7 +180,7 @@
 
          ){
              console.log(nic+ " "+ trip_id+" "+date+" "+routeId )
-             alert("Please enter the input parameters" );
+             $('#parameters-error-modal').modal('show');
          }
          else{
              exportCSV()
@@ -163,7 +199,7 @@
 
          ){
             {{--  console.log(nic+ " "+ trip_id+" "+date+" "+routeId )  --}}
-             alert("Please enter the input parameters");
+             $('#parameters-error-modal').modal('show');
          }
          else{
               preview()
