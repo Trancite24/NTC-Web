@@ -1,18 +1,16 @@
 @extends('layouts.admin-lite')
 @section('title')
-    Track Survey data
+    Mobile App Data
 @endsection
 @section('page-header')
-    Track Survey data
+    Mobile App Data
 @endsection
 @section('optional-header')
 @endsection
 @section('level')
         <br />
-        <div class="row" style="border-color: black; border-top-style: solid; border-bottom-style: solid; border-width: 1px">
-            <div class="col-md-2" style="padding-right:0px">
-              <div class="form-group text-center">
-                <label>NIC</label>
+        <div class="row">
+            <div class="col-md-2">
                 <div class="form-group no-bottom-margin">
                     <select class="form-control select2" style="width: 100%;" id="nic" name="nic">
                         <option selected="selected">Surveyors NIC</option>
@@ -21,11 +19,8 @@
                             @endforeach
                     </select>
                 </div>
-              </div>
             </div>
-            <div class="col-md-2" style="padding-right:0px">
-              <div class="form-group text-center">
-                <label>Route Id</label>
+            <div class="col-md-2">
                 <div class="form-group no-bottom-margin">
                     <select class="form-control select2" style="width: 100%;" id="route" name="route">
                         <option selected="selected">Route</option>
@@ -34,11 +29,8 @@
                         @endforeach
                     </select>
                 </div>
-              </div>
             </div>
-            <div class="col-md-2" style="padding-right:0px">
-              <div class="form-group text-center">
-                <label>Journey Date</label>
+            <div class="col-md-2">
                 <div class="form-group no-bottom-margin">
                      <select class="form-control select2" style="width: 100%;" id="date" name="route">
                         <option selected="selected">Date</option>
@@ -47,11 +39,8 @@
                         @endforeach
                     </select>
                 </div>
-              </div>
             </div>
-            <div class="col-md-2" style="padding-right:0px">
-              <div class="form-group text-center">
-                <label>Trip Id</label>
+            <div class="col-md-2">
                 <div class="form-group no-bottom-margin">
                     <select class="form-control select2" style="width: 100%;" id="trip_id" name="trip_id">
                         <option selected="selected">Trip Id</option>
@@ -60,61 +49,36 @@
                         @endforeach
                     </select>
                 </div>
-              </div>
             </div>
            
              <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
-                    <button  style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="preview" class="btn btn-info">Visualise</button>
-                </div>
-            </div>
-            <div class="col-md-1">
-                <div class="form-group no-bottom-margin">
-                    <button style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="exportCSV" class="btn btn-info">Download</button>
+                    <button  style="width: 90px; height: 35px;" id="preview" class="btn btn-info">preview</button>
                 </div>
             </div>
              <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
-                    <button style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="resetFilters" class="btn btn-info">Reset</button>
+                    <button style="width: 90px; height: 35px;" id="resetFilters" class="btn btn-info">Reset</button>
+                </div>
+            </div>
+             <div class="col-md-1">
+                <div class="form-group no-bottom-margin">
+                    <button style="width: 90px; height: 35px;" id="exportCSV" class="btn btn-info">Export CSV</button>
                 </div>
             </div>
         </div>
-        <br />
+                <br />
 @endsection
 @section('content')
     <div class="container">
         <div class="row justify-content-center" id="map" onload="myFunction()">
         </div>
     </div>
-
-    <div class="modal fade" id="parameters-error-modal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title text-center">Error In input Parameters</h4>
-              </div>
-              <div class="modal-body">
-                  <img src="/images/error.png" class="center-block" style="width: 100px">
-                  <h4 class="modal-title text-center">Check Input Parameters and try again</h4>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
-        <!-- /.modal -->
-
-
     <style>
         /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
         #map {
-            height: 800px;
+            height: 500px;
         }
         /* Optional: Makes the sample page fill the window. */
         html, body {
@@ -180,7 +144,7 @@
 
          ){
              console.log(nic+ " "+ trip_id+" "+date+" "+routeId )
-             $('#parameters-error-modal').modal('show');
+             alert("Please enter the input parameters" );
          }
          else{
              exportCSV()
@@ -199,7 +163,7 @@
 
          ){
             {{--  console.log(nic+ " "+ trip_id+" "+date+" "+routeId )  --}}
-             $('#parameters-error-modal').modal('show');
+             alert("Please enter the input parameters");
          }
          else{
               preview()
@@ -329,7 +293,26 @@
         document.getElementById("map").style.display = "block";
     }
     $('#nic').change(function(e){
-         $(this).find('option').not(':selected').remove();
+         {{--  $(this).find('option').not(':selected').remove();  --}}
+         if(currentDropDown==='#nic'){
+                $('#date').children().remove();
+                $('#route').children().remove();
+                $('#trip_id').children().remove();
+
+            var y = document.getElementById("date");
+            y.options[y.options.length]= new Option('Date', 'Date');
+             $("#nic option[value='Date']").prop('selected', true);
+
+            var z = document.getElementById("route");
+            z.options[z.options.length]= new Option('Route', 'Route');
+             $("#nic option[value='Route']").prop('selected', true);
+
+            var a = document.getElementById("trip_id");
+            a.options[a.options.length]= new Option('Trip Id', 'Trip Id');
+             $("#nic option[value='Trip Id']").prop('selected', true);
+         }
+         currentDropDown='#nic'
+    
         {{--  if(
              trip_id==="Trip Id"||
              date==="Date"||
@@ -349,7 +332,25 @@
         refreshMap('nic')
     })
     $('#route').change(function(e){
-         $(this).find('option').not(':selected').remove();
+         {{--  $(this).find('option').not(':selected').remove();  --}}
+          if(currentDropDown==='#route'){
+                $('#date').children().remove();
+          $('#nic').children().remove();
+          $('#trip_id').children().remove();
+
+            var x = document.getElementById("nic");
+            x.options[x.options.length]= new Option('Surveyors NIC', 'Surveyors NIC');
+             $("#nic option[value='Surveyors NIC']").prop('selected', true);
+
+            var y = document.getElementById("date");
+            y.options[y.options.length]= new Option('Date', 'Date');
+             $("#nic option[value='Date']").prop('selected', true);
+
+            var a = document.getElementById("trip_id");
+            a.options[a.options.length]= new Option('Trip Id', 'Trip Id');
+             $("#nic option[value='Trip Id']").prop('selected', true);
+         }
+         currentDropDown='#route'
         {{--  if(
              nic==="Surveyors NIC" ||
              trip_id==="Trip Id"||
@@ -370,7 +371,25 @@
         refreshMap('route')
     })
     $('#date').change(function(e){
-         $(this).find('option').not(':selected').remove();
+        if(currentDropDown==='#nic'){
+          $('#route').children().remove();
+          $('#nic').children().remove();
+          $('#trip_id').children().remove();
+
+            var x = document.getElementById("nic");
+            x.options[x.options.length]= new Option('Surveyors NIC', 'Surveyors NIC');
+             $("#nic option[value='Surveyors NIC']").prop('selected', true);
+
+            var z = document.getElementById("route");
+            z.options[z.options.length]= new Option('Route', 'Route');
+             $("#nic option[value='Route']").prop('selected', true);
+
+            var a = document.getElementById("trip_id");
+            a.options[a.options.length]= new Option('Trip Id', 'Trip Id');
+             $("#nic option[value='Trip Id']").prop('selected', true);
+         }
+         currentDropDown='#nic'
+         {{--  $(this).find('option').not(':selected').remove();  --}}
         {{--  if(
              nic==="Surveyors NIC" ||
              trip_id==="Trip Id"||
@@ -390,7 +409,25 @@
         refreshMap('date')
     })
     $('#trip_id').change(function(e){
-         $(this).find('option').not(':selected').remove();
+        if(currentDropDown==='#trip_id'){
+                $('#date').children().remove();
+          $('#route').children().remove();
+          $('#nic').children().remove();
+
+            var x = document.getElementById("nic");
+            x.options[x.options.length]= new Option('Surveyors NIC', 'Surveyors NIC');
+             $("#nic option[value='Surveyors NIC']").prop('selected', true);
+
+            var y = document.getElementById("date");
+            y.options[y.options.length]= new Option('Date', 'Date');
+             $("#nic option[value='Date']").prop('selected', true);
+
+            var z = document.getElementById("route");
+            z.options[z.options.length]= new Option('Route', 'Route');
+             $("#nic option[value='Route']").prop('selected', true);
+         }
+         currentDropDown='#nic'
+         {{--  $(this).find('option').not(':selected').remove();  --}}
         {{--  if(
              nic==="Surveyors NIC" ||
              date==="Date"||
@@ -414,6 +451,7 @@
         {{--  myVar = setTimeout(showMap, 1000);  --}}
         myFunction()
         trip_id= $('#trip_id').val()
+       
         if(trip_id===null || typeof trip_id==='undefined'){
             alert("No Journey to preview!")
             resetFilters()
@@ -421,7 +459,11 @@
         else{
             console.log(trip_id)
             console.log(journeyList)
+            var cLat= parseFloat(journeyList[0]["busstops"][0]["lat"])
+            var cLon=parseFloat(journeyList[0]["busstops"][0]["lon"])
+            map.panTo({lat:cLat, lng: cLon })
             for(j=0;j<journeyList.length;j++){
+             
             if(journeyList[j]["journeyId"]===trip_id){
                     console.log("Equal!!!!!!!!!!!!!!!1")
                     var busstops=journeyList[j]["busstops"]
@@ -579,6 +621,7 @@
             });     
         }; 
         function resetFilters(){
+            currentDropDown=''
              document.getElementById("loader").style.display = "block";
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
