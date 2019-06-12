@@ -1,16 +1,18 @@
 @extends('layouts.admin-lite')
 @section('title')
-    Survey Mobile Data
+    Track Survey data
 @endsection
 @section('page-header')
-    Survey Mobile Data
+    Track Survey data
 @endsection
 @section('optional-header')
 @endsection
 @section('level')
         <br />
-        <div class="row">
-            <div class="col-md-2">
+        <div class="row" style="border-color: black; border-top-style: solid; border-bottom-style: solid; border-width: 1px">
+            <div class="col-md-2" style="padding-right:0px">
+              <div class="form-group text-center">
+                <label>NIC</label>
                 <div class="form-group no-bottom-margin">
                     <select class="form-control select2" style="width: 100%;" id="nic" name="nic">
                         <option selected="selected">Surveyors NIC</option>
@@ -19,8 +21,11 @@
                             @endforeach
                     </select>
                 </div>
+              </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" style="padding-right:0px">
+              <div class="form-group text-center">
+                <label>Route Id</label>
                 <div class="form-group no-bottom-margin">
                     <select class="form-control select2" style="width: 100%;" id="route" name="route">
                         <option selected="selected">Route</option>
@@ -29,8 +34,11 @@
                         @endforeach
                     </select>
                 </div>
+              </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" style="padding-right:0px">
+              <div class="form-group text-center">
+                <label>Journey Date</label>
                 <div class="form-group no-bottom-margin">
                      <select class="form-control select2" style="width: 100%;" id="date" name="route">
                         <option selected="selected">Date</option>
@@ -39,8 +47,11 @@
                         @endforeach
                     </select>
                 </div>
+              </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" style="padding-right:0px">
+              <div class="form-group text-center">
+                <label>Trip Id</label>
                 <div class="form-group no-bottom-margin">
                     <select class="form-control select2" style="width: 100%;" id="trip_id" name="trip_id">
                         <option selected="selected">Trip Id</option>
@@ -49,25 +60,26 @@
                         @endforeach
                     </select>
                 </div>
+              </div>
             </div>
            
              <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
-                    <button  style="width: 90px; height: 35px; margin-left: 5px" id="preview" class="btn btn-info">preview</button>
+                    <button  style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="preview" class="btn btn-info">Visualise</button>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <div class="form-group no-bottom-margin">
+                    <button style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="exportCSV" class="btn btn-info">Download</button>
                 </div>
             </div>
              <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
-                    <button style="width: 90px; height: 35px; margin-left: 5px" id="resetFilters" class="btn btn-info">Reset</button>
-                </div>
-            </div>
-             <div class="col-md-1">
-                <div class="form-group no-bottom-margin">
-                    <button style="width: 90px; height: 35px; margin-left: 5px" id="exportCSV" class="btn btn-info">Export CSV</button>
+                    <button style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="resetFilters" class="btn btn-info">Reset</button>
                 </div>
             </div>
         </div>
-                <br />
+        <br />
 @endsection
 @section('content')
     <div class="container">
@@ -102,7 +114,7 @@
         /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
         #map {
-            height: 500px;
+            height: 800px;
         }
         /* Optional: Makes the sample page fill the window. */
         html, body {

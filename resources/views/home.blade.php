@@ -10,7 +10,7 @@
 @section('level')
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">dashboard</li>
+        <li class="active">Dashboard</li>
     </ol>
     @endsection
 @section('content')
@@ -60,6 +60,17 @@
                         <div class="inner">
                         <h3>{{$journeys}}</h3>
                         <p>Journeys</p>
+                        </div>
+                        <div class="icon">
+                         <i class="fa fa-road"></i>
+                        </div>
+                    </div>
+                </div> 
+                <div class="col-lg-3 col-xs-8">
+                    <div class="small-box bg-blue">
+                        <div class="inner">
+                        <h3>0</h3>
+                        <p>GPS Devices</p>
                         </div>
                         <div class="icon">
                          <i class="fa fa-road"></i>
