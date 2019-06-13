@@ -65,7 +65,7 @@
            
              <div class="col-md-1">
                 <div class="form-group no-bottom-margin">
-                    <button  style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="preview" class="btn btn-info">Visualise</button>
+                    <button  style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="preview" class="btn btn-info">Visualize</button>
                 </div>
             </div>
             <div class="col-md-1">
