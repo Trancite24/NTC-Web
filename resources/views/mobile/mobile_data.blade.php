@@ -608,7 +608,7 @@
                 url: '/mobile/app',
                 type: 'POST',
                 /* send the csrf-token and the input to the controller ,trip_id:trip_id */
-                data: {_token: CSRF_TOKEN,nic:nic,routeId:routeId,date:date},
+                data: {_token: CSRF_TOKEN,nic:nic,routeId:routeId,date:date,tripId:trip_id},
                 dataType: 'JSON',
                 /* remind that 'data' is the response of the AjaxController */
                 success: function (data) {
@@ -616,7 +616,8 @@
                     data=data
                     console.log(data)
                     journeyList=data["trips"]
-
+                    console.log("This is journey list")
+                    console.log(journeyList)
                     if(startedChk==="nic"){
                         if(routeDropChk===0){
                             changeRoute(data)
