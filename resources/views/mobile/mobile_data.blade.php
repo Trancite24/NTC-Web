@@ -207,6 +207,7 @@
          }
     });
      $("#preview").click(function(){
+        deleteMarkers()
         nic=$("#nic").val();
         trip_id=$("#trip_id").val();
         date=$("#date").val();
@@ -222,6 +223,7 @@
              $('#parameters-error-modal').modal('show');
          }
          else{
+              console.log("loading preview")
               preview()
          }
     });
@@ -343,90 +345,172 @@
     var journeyList=null
     var data=null
     var currentDropDown=""
+    var nicDropChk=0
+    var routeDropChk=0
+    var dateDropChk=0
+    var tripDropChk=0
+    var startedChk=""
 
     function showMap() {
         document.getElementById("loader").style.display = "none";
         document.getElementById("map").style.display = "block";
     }
     $('#nic').change(function(e){
-         $(this).find('option').not(':selected').remove();
-        {{--  if(
-             trip_id==="Trip Id"||
-             date==="Date"||
-             routeId==="Route"
-
-         ){
-             currentDropDown='#nic'
-        }
-         if(currentDropDown==='#nic'){
-            var trip_id="Trip Id";
-            var date="Date";  
-            var routeId="Route";
-        }  --}}
-        document.getElementById("loader").style.display = "block";
-        {{--  myVar = setTimeout(showMap, 1000);  --}}
         nic=this.value
+        if(startedChk===""){
+            startedChk="nic"
+        }
+        if(nicDropChk===1){
+            //resetting the trip id
+             $('#trip_id').children().remove();
+            var a = document.getElementById("trip_id");
+            a.options[a.options.length]= new Option('Trip Id', 'Trip Id');
+            $("#trip_id option[value='Trip Id']").prop('selected', true);
+
+            //resetting the 
+            $('#date').children().remove();
+            var y = document.getElementById("date");
+            y.options[y.options.length]= new Option('Date', 'Date');
+            $("#date option[value='Date']").prop('selected', true);
+            
+            $('#route').children().remove();
+            var y = document.getElementById("route");
+            y.options[y.options.length]= new Option('Route', 'Route');
+            $("#route option[value='Date']").prop('selected', true);
+
+             {{--  $('#nic').children().remove();
+            var x = document.getElementById("nic");
+            x.options[x.options.length]= new Option('Surveyors NIC', 'Surveyors NIC');
+             $("#nic option[value='Surveyors NIC']").prop('selected', true);  --}}
+
+            trip_id= $('#trip_id').val()
+            nic= $('#nic').val()
+            date= $('#date').val()
+            routeId= $('#route').val()
+
+            routeDropChk=0
+            dateDropChk=0
+            tripDropChk=0
+            alert(trip_id+" "+nic+" "+date+" "+route )
+
+        }
+        nicDropChk=1
+        document.getElementById("loader").style.display = "block";
         refreshMap('nic')
     })
     $('#route').change(function(e){
-         $(this).find('option').not(':selected').remove();
-        {{--  if(
-             nic==="Surveyors NIC" ||
-             trip_id==="Trip Id"||
-             date==="Date"
-
-         ){
-            currentDropDown='#route'
-        }
-         if(currentDropDown==='#route'){
-            var nic="Surveyors NIC";
-            var trip_id="Trip Id";
-            var date="Date";  
-        }  --}}
-        document.getElementById("loader").style.display = "block";
-        {{--  myVar = setTimeout(showMap, 1000);  --}}
         routeId=this.value
-        {{--  alert(nic+" "+routeId+" "+trip_id+" "+date)  --}}
+        if(startedChk===""){
+            startedChk="route"
+        }
+        if(routeDropChk===1){
+            //resetting the trip id
+             $('#trip_id').children().remove();
+            var a = document.getElementById("trip_id");
+            a.options[a.options.length]= new Option('Trip Id', 'Trip Id');
+            $("#trip_id option[value='Trip Id']").prop('selected', true);
+
+            //resetting the 
+            $('#date').children().remove();
+            var y = document.getElementById("date");
+            y.options[y.options.length]= new Option('Date', 'Date');
+            $("#date option[value='Date']").prop('selected', true);
+
+             $('#nic').children().remove();
+            var x = document.getElementById("nic");
+            x.options[x.options.length]= new Option('Surveyors NIC', 'Surveyors NIC');
+             $("#nic option[value='Surveyors NIC']").prop('selected', true);
+
+            trip_id= $('#trip_id').val()
+            nic= $('#nic').val()
+            date= $('#date').val()
+            routeId= $('#route').val()
+
+            nicDropChk=0
+            dateDropChk=0
+            tripDropChk=0
+            alert(trip_id+" "+nic+" "+date+" "+routeId )
+
+        }
+        routeDropChk=1
+        document.getElementById("loader").style.display = "block";
+      
         refreshMap('route')
     })
     $('#date').change(function(e){
-         $(this).find('option').not(':selected').remove();
-        {{--  if(
-             nic==="Surveyors NIC" ||
-             trip_id==="Trip Id"||
-             routeId==="Route"
-
-         ){
-             currentDropDown='#date'
-        }
-        if(currentDropDown==='#date'){
-            var nic="Surveyors NIC";
-            var trip_id="Trip Id";
-            var routeId="Route";
-        }  --}}
-        document.getElementById("loader").style.display = "block";
-        {{--  myVar = setTimeout(showMap, 1000);  --}}
         date=this.value
+        if(startedChk===""){
+            startedChk="date"
+        }
+         if(dateDropChk===1){
+            //resetting the trip id
+             $('#trip_id').children().remove();
+            var a = document.getElementById("trip_id");
+            a.options[a.options.length]= new Option('Trip Id', 'Trip Id');
+            $("#trip_id option[value='Trip Id']").prop('selected', true);
+            
+            $('#route').children().remove();
+            var y = document.getElementById("route");
+            y.options[y.options.length]= new Option('Route', 'Route');
+            $("#route option[value='Date']").prop('selected', true);
+
+             $('#nic').children().remove();
+            var x = document.getElementById("nic");
+            x.options[x.options.length]= new Option('Surveyors NIC', 'Surveyors NIC');
+             $("#nic option[value='Surveyors NIC']").prop('selected', true);
+
+            trip_id= $('#trip_id').val()
+            nic= $('#nic').val()
+            date= $('#date').val()
+            routeId= $('#route').val()
+
+            routeDropChk=0
+            nicDropChk=0
+            tripDropChk=0
+            alert(trip_id+" "+nic+" "+date+" "+routeId )
+
+        }
+        dateDropChk=1
+        document.getElementById("loader").style.display = "block";
         refreshMap('date')
     })
     $('#trip_id').change(function(e){
-         $(this).find('option').not(':selected').remove();
-        {{--  if(
-             nic==="Surveyors NIC" ||
-             date==="Date"||
-             routeId==="Route"
-
-         ){
-             currentDropDown='#trip_id'
-        }
-        if(currentDropDown==='#trip_id'){
-            var nic="Surveyors NIC";
-            var date="Date";  
-            var routeId="Route";
-        }  --}}
-        document.getElementById("loader").style.display = "block";
-        {{--  myVar = setTimeout(showMap, 1000);  --}}
         trip_id=this.value
+        if(startedChk===""){
+            startedChk="trip_id"
+        }
+        if(tripDropChk===1){
+
+            //resetting the 
+            $('#date').children().remove();
+            var y = document.getElementById("date");
+            y.options[y.options.length]= new Option('Date', 'Date');
+            $("#date option[value='Date']").prop('selected', true);
+            
+            $('#route').children().remove();
+            var y = document.getElementById("route");
+            y.options[y.options.length]= new Option('Route', 'Route');
+            $("#route option[value='Date']").prop('selected', true);
+
+             $('#nic').children().remove();
+            var x = document.getElementById("nic");
+            x.options[x.options.length]= new Option('Surveyors NIC', 'Surveyors NIC');
+             $("#nic option[value='Surveyors NIC']").prop('selected', true);
+
+            trip_id= $('#trip_id').val()
+            nic= $('#nic').val()
+            date= $('#date').val()
+            routeId= $('#route').val()
+
+            routeDropChk=0
+            dateDropChk=0
+            nicDropChk=0
+            alert(trip_id+" "+nic+" "+date+" "+routeId )
+
+        }
+        tripDropChk=1
+        document.getElementById("loader").style.display = "block";
+       
         refreshMap('trip_id')
     })
     function preview(){
@@ -441,6 +525,9 @@
         else{
             console.log(trip_id)
             console.log(journeyList)
+            var cLat= parseFloat(journeyList[0]["busstops"][0]["lat"])
+            var cLon=parseFloat(journeyList[0]["busstops"][0]["lon"])
+            map.panTo({lat:cLat, lng: cLon })
             for(j=0;j<journeyList.length;j++){
             if(journeyList[j]["journeyId"]===trip_id){
                     console.log("Equal!!!!!!!!!!!!!!!1")
@@ -526,78 +613,120 @@
                 /* remind that 'data' is the response of the AjaxController */
                 success: function (data) {
                     showMap()
-                    data=data   
-                    {{--  alert(data["date"]+data["nic"]+data["trips"])  --}}
-                    //console.log(data)
-                    //empting the nic and append new data
-                    if(dropId==='nic'){
-                          $('#route').children().remove();
-                          $('#date').children().remove();
-                          $('#trip_id').children().remove();
-                    }
-                    else if(dropId==='route'){
-                        $('#nic').children().remove();
-                          $('#date').children().remove();
-                          $('#trip_id').children().remove();
-                    }
-                    else if(dropId==='date'){
-                        $('#route').children().remove();
-                          $('#nic').children().remove();
-                          $('#trip_id').children().remove();
-                    }
-                    else if(dropId==='trip_id'){
-                        $('#route').children().remove();
-                          $('#date').children().remove();
-                          $('#nic').children().remove();
-                    }
-                     if(dropId!='nic'){
-                        for(j=0;j<data["nic"].length;j++){
-                            var dataOp=data["nic"][j]["nic"]
-                            var opt = document.createElement('option');
-                            opt.appendChild( document.createTextNode(dataOp));
-                            opt.value =dataOp; 
-                            document.getElementById('nic').appendChild(opt); 
-                        } 
-                     }
-                    //empting the routes and append new data
-                    if(dropId!='route'){
-                     for(j=0;j<data["routes"].length;j++){
-                          var dataOp=data["routes"][j]["routeNo"]
-                          var opt = document.createElement('option');
-                          opt.appendChild( document.createTextNode(dataOp));
-                          opt.value =dataOp; 
-                          document.getElementById('route').appendChild(opt); 
-                      }
-                    }
-                    //empting the dates and append new data
-                    if(dropId!='date'){
-                      for(j=0;j<data["dates"].length;j++){
-                          var dataOp=data["dates"][j]["date"]
-                          var opt = document.createElement('option');
-                          opt.appendChild( document.createTextNode(dataOp));
-                          opt.value =dataOp; 
-                          document.getElementById('date').appendChild(opt); 
-                      }
-                    }
-                     //empting the trip Ids and append new data
+                    data=data
+                    console.log(data)
                     journeyList=data["trips"]
-                    if(dropId!='trip_id'){
-                        for(j=0;j<data["trips"].length;j++){
-                        console.log(data["trips"][j]);
-                          var dataOp=data["trips"][j]["fromName"]+"-"+ data["trips"][j]["toName"]
-                          var opt = document.createElement('option');
-                          opt.appendChild( document.createTextNode(dataOp));
-                          opt.text=data["trips"][j]["fromName"]+"-"+data["trips"][j]["toName"]
-                          opt.value=data["trips"][j]["journeyId"]
-                          document.getElementById('trip_id').appendChild(opt); 
-                     }
+
+                    if(startedChk==="nic"){
+                        if(routeDropChk===0){
+                            changeRoute(data)
+                        }
+                        if(dateDropChk===0){
+                            changeDate(data)
+                        }
+                        if(tripDropChk===0){
+                            changeTrip(data)
+                        }
                     }
+                    else if(startedChk==="route"){
+                        if(nicDropChk===0){
+                            changeNic(data)
+                        }
+                        if(dateDropChk===0){
+                            changeDate(data)
+                        }
+                        if(tripDropChk===0){
+                            changeTrip(data)
+                        }
+                    }   
+                    else if(startedChk==="date"){
+                        if(routeDropChk===0){
+                            changeRoute(data)
+                        }
+                        if(dateDropChk===0){
+                            changeDate(data)
+                        }
+                        if(tripDropChk===0){
+                            changeTrip(data)
+                        }
+                    }
+                    else if(startedChk==="trip_id"){
+                        if(routeDropChk===0){
+                            changeRoute(data)
+                        }
+                        if(dateDropChk===0){
+                            changeDate(data)
+                        }
+                         if(nicDropChk===0){
+                            changeNic(data)
+                        }
+                    }
+                  
+                    
                 },
                 error:function (jqXHR, textStatus, errorThrown) { 
                    alert("We got an error processing the request")
                 }
             });     
         }; 
+        function changeRoute(data){
+            $('#route').children().remove();
+            var y = document.getElementById("route");
+            y.options[y.options.length]= new Option('Route', 'Route');
+            $("#route option[value='Date']").prop('selected', true);
+            
+            for(j=0;j<data["routes"].length;j++){
+                var dataOp=data["routes"][j]["routeNo"]
+                var opt = document.createElement('option');
+                opt.appendChild( document.createTextNode(dataOp));
+                opt.value =dataOp; 
+                document.getElementById('route').appendChild(opt); 
+            }
+        }
+        function changeDate(data){
+             $('#date').children().remove();
+            var y = document.getElementById("date");
+            y.options[y.options.length]= new Option('Date', 'Date');
+            $("#date option[value='Date']").prop('selected', true);
+
+            for(j=0;j<data["dates"].length;j++){
+                var dataOp=data["dates"][j]["date"]
+                var opt = document.createElement('option');
+                opt.appendChild( document.createTextNode(dataOp));
+                opt.value =dataOp; 
+                document.getElementById('date').appendChild(opt); 
+            }
+        }
+        function changeTrip(data){
+             $('#trip_id').children().remove();
+            var a = document.getElementById("trip_id");
+            a.options[a.options.length]= new Option('Trip Id', 'Trip Id');
+            $("#trip_id option[value='Trip Id']").prop('selected', true);
+
+            for(j=0;j<data["trips"].length;j++){
+                var dataOp=data["trips"][j]["fromName"]+"-"+ data["trips"][j]["toName"]
+                var opt = document.createElement('option');
+                opt.appendChild( document.createTextNode(dataOp));
+                opt.text=data["trips"][j]["fromName"]+"-"+data["trips"][j]["toName"]
+                opt.value=data["trips"][j]["journeyId"]
+                document.getElementById('trip_id').appendChild(opt); 
+            }
+
+        }
+        function changeNic(data){
+             $('#nic').children().remove();
+            var x = document.getElementById("nic");
+            x.options[x.options.length]= new Option('Surveyors NIC', 'Surveyors NIC');
+             $("#nic option[value='Surveyors NIC']").prop('selected', true);
+
+            for(j=0;j<data["nic"].length;j++){
+                var dataOp=data["nic"][j]["nic"]
+                var opt = document.createElement('option');
+                opt.appendChild( document.createTextNode(dataOp));
+                opt.value =dataOp; 
+                document.getElementById('nic').appendChild(opt); 
+            } 
+        }
         function resetFilters(){
              document.getElementById("loader").style.display = "block";
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -613,6 +742,7 @@
                 success: function (data) { 
                     console.log(data)
                     showMap()
+                    startedChk=""
                     //empting the nic and append new data
                     {{--  $('#nic').children().remove();  --}}
                     for(j=0;j<data["nic"].length;j++){
