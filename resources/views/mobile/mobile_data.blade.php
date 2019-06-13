@@ -108,7 +108,27 @@
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
-
+<div class="modal fade" id="no-journey-error-modal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title text-center">No journey to preview</h4>
+              </div>
+              <div class="modal-body">
+                  <img src="/images/error.png" class="center-block" style="width: 100px">
+                  <h4 class="modal-title text-center">Check Input Parameters and try again</h4>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
 
     <style>
         /* Always set the map height explicitly to define the size of the div
@@ -415,7 +435,7 @@
         myFunction()
         trip_id= $('#trip_id').val()
         if(trip_id===null || typeof trip_id==='undefined'){
-            alert("No Journey to preview!")
+            $('#no-journey-error-modal').modal.show()
             resetFilters()
         }
         else{
@@ -425,9 +445,9 @@
             if(journeyList[j]["journeyId"]===trip_id){
                     console.log("Equal!!!!!!!!!!!!!!!1")
                     var busstops=journeyList[j]["busstops"]
-                    {{--  for(i=0;i<busstops.length;i++){
-                        console.log(busstops[i]["lat"]+" "+busstops[i]["lon"])
-                    }  --}}
+                    //  for(i=0;i<busstops.length;i++){
+                    //     console.log(busstops[i]["lat"]+" "+busstops[i]["lon"])
+                    // }  
                     console.log(busstops)
                     markMap(busstops)
             }
