@@ -416,7 +416,7 @@
     })
     function preview(){
         document.getElementById("loader").style.display = "block";
-        {{--  myVar = setTimeout(showMap, 1000);  --}}
+        {{--  myVar = setTimeout(showMap, 1200);  --}}
         myFunction()
         trip_id= $('#trip_id').val()
         if(trip_id===null || typeof trip_id==='undefined'){
