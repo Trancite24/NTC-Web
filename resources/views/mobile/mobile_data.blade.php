@@ -86,6 +86,27 @@
         <div class="row justify-content-center" id="map" onload="myFunction()">
         </div>
     </div>
+    <div class="modal fade" id="reset-error-modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title text-center">Press Reset</h4>
+                    </div>
+                    <div class="modal-body">
+                        <img src="/images/error.png" class="center-block" style="width: 100px">
+                        <h4 class="modal-title text-center">Please Click On Reset Button To Change the Values</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+                </div>
+                <!-- /.modal -->
 
     <div class="modal fade" id="parameters-error-modal">
           <div class="modal-dialog">
@@ -129,7 +150,7 @@
           <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
-
+        
     <style>
         /* Always set the map height explicitly to define the size of the div
          * element that contains the map. */
@@ -277,33 +298,35 @@
         if( typeof loc["busStopTypenone"]==='undefined'){
                 var busstoptype="-"
         }
+        var timeStamp=new Date(loc["timeStamp"]*1000);
+        var updatedTime=new Date(loc["updatedTime"]*1000);
         infowindow = new google.maps.InfoWindow({
-            content: '<p><strong>Bus Stop Type</strong>:'+busstoptype+'<br/>'
-                    +'<strong>bus stop Id</strong>:'+loc["busstopId"]+'<br/>'
-                    +'<strong>female Child In</strong>:'+loc["femaleChildIn"]+'<br/>'
-                    +'<strong>female Child Out</strong>:'+loc["femaleChildOut"]+'<br/>'
-                    +'<strong>female Elder In</strong>:'+loc["femaleElderIn"]+'<br/>'
-                    +'<strong>female Elder Out</strong>:'+loc["femaleElderOut"]+'<br/>'
-                    +'<strong>female Woman In</strong>:'+loc["femaleWomanIn"]+'<br/>'
-                    +'<strong>female Woman Out</strong>:'+loc["femaleWomanOut"]+'<br/>'
-                    +'<strong>female Young In</strong>:'+loc["femaleYoungIn"]+'<br/>'
-                    +'<strong>female Young Out</strong>:'+loc["femaleYoungOut"]+'<br/>'
-                    +'<strong>in Total</strong>:'+loc["inTotal"]+'<br/>'
-                    +'<strong>journey Id</strong>:'+loc["journeyId"]+'<br/>'
-                    +'<strong>lat</strong>:'+loc["lat"]+'<br/>'
-                    +'<strong>lon</strong>:'+loc["lon"]+'<br/>'
-                    +'<strong>male Child In</strong>:'+loc["maleChildIn"]+'<br/>'
-                    +'<strong>male Child Out</strong>:'+loc["maleChildOut"]+'<br/>'
-                    +'<strong>male Elder In</strong>:'+loc["maleElderIn"]+'<br/>'
-                    +'<strong>male Elder Out</strong>:'+loc["maleElderOut"]+'<br/>'
-                    +'<strong>male Man In</strong>:'+loc["maleManIn"]+'<br/>'
-                    +'<strong>male Man Out</strong>:'+loc["maleManOut"]+'<br/>'
-                    +'<strong>male Young In</strong>:'+loc["maleYoungIn"]+'<br/>'
-                    +'<strong>male Young Out</strong>:'+loc["maleYoungOut"]+'<br/>'
-                    +'<strong>name</strong>:'+loc["name"]+'<br/>'
-                    +'<strong>out Total</strong>:'+loc["outTotal"]+'<br/>'
-                    +'<strong>time Stamp</strong>:'+loc["timeStamp"]+'<br/>'
-                    +'<strong>updated Time</strong>:'+loc["updatedTime"]+'<br/></p>'
+            content: '<p><strong>Bus Stop Type</strong>: '+busstoptype+'<br/>'
+                    +'<strong>bus stop Id</strong>: '+loc["busstopId"]+'<br/>'
+                    +'<strong>female Child In</strong>: '+loc["femaleChildIn"]+'<br/>'
+                    +'<strong>female Child Out</strong> :'+loc["femaleChildOut"]+'<br/>'
+                    +'<strong>female Elder In</strong>: '+loc["femaleElderIn"]+'<br/>'
+                    +'<strong>female Elder Out</strong>: '+loc["femaleElderOut"]+'<br/>'
+                    +'<strong>female Woman In</strong>: '+loc["femaleWomanIn"]+'<br/>'
+                    +'<strong>female Woman Out</strong>: '+loc["femaleWomanOut"]+'<br/>'
+                    +'<strong>female Young In</strong>: '+loc["femaleYoungIn"]+'<br/>'
+                    +'<strong>female Young Out</strong>: '+loc["femaleYoungOut"]+'<br/>'
+                    +'<strong>in Total</strong>: '+loc["inTotal"]+'<br/>'
+                    +'<strong>journey Id</strong>: '+loc["journeyId"]+'<br/>'
+                    +'<strong>lat</strong>: '+loc["lat"]+'<br/>'
+                    +'<strong>lon</strong>: '+loc["lon"]+'<br/>'
+                    +'<strong>male Child In</strong>: '+loc["maleChildIn"]+'<br/>'
+                    +'<strong>male Child Out</strong>: '+loc["maleChildOut"]+'<br/>'
+                    +'<strong>male Elder In</strong>: '+loc["maleElderIn"]+'<br/>'
+                    +'<strong>male Elder Out</strong>: '+loc["maleElderOut"]+'<br/>'
+                    +'<strong>male Man In</strong>: '+loc["maleManIn"]+'<br/>'
+                    +'<strong>male Man Out</strong>: '+loc["maleManOut"]+'<br/>'
+                    +'<strong>male Young In</strong>: '+loc["maleYoungIn"]+'<br/>'
+                    +'<strong>male Young Out</strong>: '+loc["maleYoungOut"]+'<br/>'
+                    +'<strong>name</strong>: '+loc["name"]+'<br/>'
+                    +'<strong>out Total</strong>: '+loc["outTotal"]+'<br/>'
+                    +'<strong>time Stamp</strong>: '+timeStamp+'<br/>'
+                    +'<strong>updated Time</strong>: '+updatedTime+'<br/></p>'
         });
         marker.addListener('click', function() {
             infowindow.open(map, marker);
@@ -372,8 +395,9 @@
     })
     function showResetMessage(id,def){
         {{--  alert("IN show reset message")  --}}
-        if(startedChk===id && $('#'+id).val()!=def){
-            alert("PIPmaad")
+        if($('#'+id).val()!=def){
+            $('#reset-error-modal').modal('show');
+
         }
     }
     $('#route').change(function(e){
@@ -452,6 +476,8 @@
         $('#trip_id > option').each(function() {
             options.push($(this).val())
         });
+        console.log("this is options")
+        console.log(options)
         for(j=0;j<journeyList.length;j++){
            if(options.includes(journeyList[j]["journeyId"])){
                 console.log("Equal!!!!!!!!!!!!!!!1")
@@ -483,8 +509,8 @@
                     +busstops[i]["maleYoungOut"]+","
                     +busstops[i]["name"]+","
                     +busstops[i]["outTotal"]+","
-                    +busstops[i]["timeStamp"]+","
-                    +busstops[i]["updatedTime"]+"\n"
+                    +new Date(busstops[i]["timeStamp"]*1000)+","
+                    +new Date(busstops[i]["updatedTime"]*1000)+"\n"
                 }
            }
         }
@@ -493,11 +519,21 @@
     function exportCSV(){
         document.getElementById("loader").style.display = "block";
         myVar = setTimeout(showMap, 1000);
-        var link = document.createElement('a');
-        link.download = 'data.xlsx';
-        var blob = new Blob([dataPreparation()], {type: 'text/plain'});
-        link.href = window.URL.createObjectURL(blob);
-        link.click();
+
+        if (navigator.msSaveBlob) { // IE 10+
+            var blob = new Blob([dataPreparation()], {type: 'text/plain'});
+            console.log("Internet Explorer detected");
+            navigator.msSaveBlob(blob, 'data.csv');
+        }
+        else {
+            var link = document.createElement('a');
+            link.download = 'data.csv';
+            var blob = new Blob([dataPreparation()], {type: 'text/plain'});
+            link.href = window.URL.createObjectURL(blob);
+            link.click();
+        }
+       
+        
      }
     function refreshMap(dropId){
              {{--  alert(startedChk+" "+routeDropChk+" "+dateDropChk+" "+tripDropChk+" "+nicDropChk)  --}}
