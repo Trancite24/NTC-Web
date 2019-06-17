@@ -1,6 +1,6 @@
 @extends('layouts.admin-lite')
 @section('title')
-    Home
+    Dashboard
     @endsection
 @section('page-header')
     Dashboard
