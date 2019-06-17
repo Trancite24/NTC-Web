@@ -288,6 +288,19 @@
         content: '<p>Marker Location:' + marker.getPosition() + '</p>'
         });
     }
+    function timeConverter(UNIX_timestamp){
+        alert("Unix date " + UNIX_timestamp)
+        var a = new Date(UNIX_timestamp * 1000);
+        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        var year = a.getFullYear();
+        var month = months[a.getMonth()];
+        var date = a.getDate();
+        var hour = a.getHours();
+        var min = a.getMinutes();
+        var sec = a.getSeconds();
+        var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+        return time;
+    }
            {{--  icon:"public/images/bus.png",  --}}
     function addMarker(loc) {
         var marker = new google.maps.Marker({
@@ -298,8 +311,8 @@
         if( typeof loc["busStopTypenone"]==='undefined'){
                 var busstoptype="-"
         }
-        var timeStamp=new Date(loc["timeStamp"]*1000);
-        var updatedTime=new Date(loc["updatedTime"]*1000);
+        var timeStamp= new Date(parseInt(loc["timeStamp"]))
+        var updatedTime=new Date(parseInt(loc["updatedTime"]))
         infowindow = new google.maps.InfoWindow({
             content: '<p><strong>Bus Stop Type</strong>: '+busstoptype+'<br/>'
                     +'<strong>bus stop Id</strong>: '+loc["busstopId"]+'<br/>'
