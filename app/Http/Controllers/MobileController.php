@@ -21,7 +21,7 @@ class MobileController extends Controller
         $routes =DB::Table('journey')->select('routeNo')->distinct()->get();
 
         return view('mobile.mobile_data')->with('nics',$nics)->with('trip_ids', $trip_ids)->with('routes',$routes)->with('dates',$dates);
-    
+
     }
 
     public function getJourneyDetails(Request $request){
@@ -42,11 +42,13 @@ class MobileController extends Controller
         if ($tripId!="Trip Id" && $tripId!="") {
             $query=$query->where('journeyId',$tripId);
         }
-        $res=$query->get();
+
+        $query = $query->orderBy('record_no',['asc']);
+//        $res=$query->get();
         // var_dump("test "+$routeId);
         return json_encode([
-        
-        'nic'=>$query->select('nic')->distinct()->get(),    
+
+        'nic'=>$query->select('nic')->distinct()->get(),
         'routes'=>$query->select('routeNo')->distinct()->get(),
         'dates'=>$query->select('date')->distinct()->get(),
         'trips'=>$query->select('journeyId','fromName','toName')->distinct()->get()
@@ -70,7 +72,7 @@ class MobileController extends Controller
         // When displaying use markers for busstops and add the details on marker tooltip
     }
     public function refresh(Request $request){
-        
+
         $nics= DB::Table('journey')->select('nic')->distinct()->get();
         $trip_ids = DB::Table('journey')->select('journeyId','fromName','toName')->distinct()->get();
         $dates=DB::Table('journey')->select('date')->distinct()->get();
