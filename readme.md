@@ -1,7 +1,7 @@
 Deploying
 
 Set environment variables;
-
+Create a google map api key and fill the MAP_API_KEY env property as well.
 generate app key and set the app key. 
 
 run ``php artisan key:generate``
