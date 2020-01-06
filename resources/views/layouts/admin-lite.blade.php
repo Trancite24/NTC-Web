@@ -16,6 +16,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{asset('admin-lte/bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{asset('admin-lte/bower_components/font-awesome/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{asset('admin-lte/bower_components/fontawesome-free/css/fontawesome.min.css')}}">
+
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{asset('admin-lte/bower_components/Ionicons/css/ionicons.min.css')}}">
     <!-- Theme style -->
@@ -99,12 +101,12 @@ desired effect
         }  --}}
 
         @-webkit-keyframes animatebottom {
-        from { bottom:-100px; opacity:0 } 
+        from { bottom:-100px; opacity:0 }
         to { bottom:0px; opacity:1 }
         }
 
-        @keyframes animatebottom { 
-        from{ bottom:-100px; opacity:0 } 
+        @keyframes animatebottom {
+        from{ bottom:-100px; opacity:0 }
         to{ bottom:0; opacity:1 }
         }
 
@@ -171,14 +173,14 @@ desired effect
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="/images/avatar.png" class="user-image" alt="User Image">
+                            <img src="/images/person-man.png" class="user-image" alt="User Image">
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">{{Auth::user()->name}}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="/images/avatar.png" class="img-circle" alt="User Image">
+                                <img src="/images/person-man.png" class="img-circle" alt="User Image">
 
                                 <p>
                                     {{Auth::user()->name}}
@@ -192,19 +194,29 @@ desired effect
                                     <a href="#" class="btn btn-default btn-flat">Profile</a>
                                 </div> -->
                                 <div class="row">
+                                    <div class="col-md col-md-offset-4">
+                                        <a href="{{route('updatePasswordForm')}}"><i class="fa fa-user-secret"></i> <span>Change Password</span> </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md col-md-offset-4">
+                                        <a href="{{route('updateAccountForm')}}"><i class="fa fa-pencil"> </i> <span>Update Account</span></a>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-4 col-md-offset-4">
-                                    <a href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        <i class="fa fa-power-off"> </i> <span>Logout</span>
-                                    </a>
+                                        <a href="{{ route('logout') }}"
+                                           onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
+                                            <i class="fa fa-power-off"> </i> <span>Logout</span>
+                                        </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>                                
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                    </div>
                                 </div>
-                                </div>
-                                
+
                             </li>
                         </ul>
                     </li>
@@ -225,7 +237,7 @@ desired effect
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="/images/avatar.png" class="img-circle" alt="User Image">
+                    <img src="/images/person-man.png" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>{{Auth::user()->name}}</p>
@@ -250,40 +262,37 @@ desired effect
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">Menu</li>
                 <!-- Optionally, you can add icons to the links -->
-                <li>
+                <li class="{{ Route::is('home') ? 'active' : '' }}">
                     <a href="{{route('home')}}">
                         <i class="fa fa-dashboard fa-lg"></i> <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="active"><a href="{{route('mobile')}}"><i class="fa fa-mobile-phone fa-lg"></i> <span>Track Survey Data</span></a></li>
-                <li><a href="{{route('device')}}"><i class="fa fa-line-chart fa-lg"></i> <span>Track GPS Data</span></a></li>
-                <li class="treeview">
-                    <a href="#"><i class="fa fa-gears fa-lg"></i> <span>Account</span>
-                       <!--  <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span> -->
-                    </a>
-                    <ul class="treeview menu-open" style="padding-left: 35px">
-                        <li><a href="{{route('updatePasswordForm')}}"><i class="fa fa-user-secret"></i> <span>Change Password</span> </a></li>
-                        <li><a href="{{route('updateAccountForm')}}"><i class="fa fa-pencil"> </i> <span>Update Account</span></a></li>
-                        <li><a href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                <i class="fa fa-power-off"> </i> <span>Logout</span>
-                                </a>
+                <li class="{{ Route::is('mobile') ? 'active' : '' }}"><a href="{{route('mobile')}}"><i class="fa fa-mobile-phone fa-lg" style="font-size: 35px"></i> <span>Track Survey Data</span></a></li>
+                <li class="{{ Route::is('device') ? 'active' : '' }}"><a href="{{route('device')}}"><i class="fa fa-tint fa-rotate-180 fa-lg" style="font-size: 30px"></i> <span>Track GPS Data</span></a></li>
+                {{--<li class="treeview">--}}
+                    {{--<a href="#"><i class="fa fa-gears fa-lg"></i> <span>Account Settings</span>--}}
+                       {{--<!--  <span class="pull-right-container">--}}
+                            {{--<i class="fa fa-angle-left pull-right"></i>--}}
+                        {{--</span> -->--}}
+                    {{--</a>--}}
+                    {{--<ul class="treeview menu-closed" style="padding-left: 35px">--}}
+                        {{--<li><a href="{{route('updatePasswordForm')}}"><i class="fa fa-user-secret"></i> <span>Change Password</span> </a></li>--}}
+                        {{--<li><a href="{{route('updateAccountForm')}}"><i class="fa fa-pencil"> </i> <span>Update Account</span></a></li>--}}
+                        {{--<li><a href="{{ route('logout') }}"--}}
+                                   {{--onclick="event.preventDefault();--}}
+                                                     {{--document.getElementById('logout-form').submit();">--}}
+                                {{--<i class="fa fa-power-off"> </i> <span>Logout</span>--}}
+                                {{--</a>--}}
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                        </li>
-                    </ul>
-                </li>
-            @if(Auth::user()->type == 'super_adm')
-                <li><a href="{{route('addAdminPage')}}"><i class="fa fa-plus fa-lg"></i> <span>Register Users</span></a></li>
-                <li><a href="{{route('viewUserForm')}}"><i class="fa fa-eye-slash fa-lg"></i> <span>View Users</span></a></li>
-            @elseif(Auth::user()->type == 'uom_adm' or Auth::user()->type == 'ntc_adm')
-                <li><a href="{{route('addAdminPage')}}"><i class="fa fa-plus fa-lg"></i> <span>Register Users</span></a></li>
-                <li><a href="{{route('viewUserForm')}}"><i class="fa fa-eye-slash fa-lg"></i> <span>View Users</span></a></li>
+                                {{--<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">--}}
+                                    {{--@csrf--}}
+                                {{--</form>--}}
+                        {{--</li>--}}
+                    {{--</ul>--}}
+                {{--</li>--}}
+            @if(Auth::user()->type == 'super_adm' or Auth::user()->type == 'uom_adm' or Auth::user()->type == 'ntc_adm')
+                <li><a href="{{route('addAdminPage')}}"><i class="fa fa-user-plus fa-lg"></i> <span>Register Users</span></a></li>
+                <li><a href="{{route('viewUserForm')}}"><i class="fa fa-users fa-lg"></i> <span>Access Management</span></a></li>
                 @endif
             </ul>
 

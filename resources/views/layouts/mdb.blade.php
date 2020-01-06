@@ -35,7 +35,7 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #84063A; font-weight: bold">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'NTC') }}
@@ -118,7 +118,7 @@
 <script type="text/javascript" src="{{asset('mdb/js/addons/bootstrap-datepicker.js')}}"></script>
 
 <!-- Footer -->
-<footer class="page-footer fixed-bottom font-small aqua-gradient">
+<footer class="page-footer fixed-bottom font-small bg-white">
 
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">© 2019 Copyright:
