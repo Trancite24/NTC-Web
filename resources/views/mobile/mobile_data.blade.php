@@ -305,7 +305,7 @@
     function addMarker(loc) {
         var marker = new google.maps.Marker({
         position: {lat: parseFloat(loc["lat"]), lng: parseFloat(loc["lon"])},
-        icon:"/images/marker.png",
+        icon:"/images/marker.ico",
         map: map
         });
         if( typeof loc["busStopTypenone"]==='undefined'){
