@@ -28,7 +28,7 @@
                 </div>
             </div>
              <div class="row">
-                <div class="col-lg-3 col-xs-6">
+                <div class="col-lg-3 col-xs-6" style="padding-left: 30px;">
                     <!-- small box -->
                     <div class="small-box bg-aqua">
                         <div class="inner">
@@ -64,14 +64,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-xs-6">
+                <div class="col-lg-3 col-xs-6" style="padding-right: 30px;">
                     <div class="small-box bg-blue">
                         <div class="inner">
                         <h3>0</h3>
                         <p>GPS Devices</p>
                         </div>
                         <div class="icon">
-                         <i class="fa fa-road"></i>
+                         <i class="fa fa-cubes"></i>
                         </div>
                     </div>
                 </div>

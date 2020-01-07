@@ -35,7 +35,7 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #84063A; font-weight: bold">
+    <nav class="navbar navbar-expand-md navbar-dark shadow-sm" style="background-color: #1a2226; font-weight: bold">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'NTC') }}
@@ -105,6 +105,17 @@
          background-repeat: no-repeat;
          background-size: cover;
      }
+    .main-footer {
+        background:
+            #fff;
+        padding: 15px;
+        color:
+            #444;
+        border-top: 1px solid
+        #d2d6de;
+        height: 40px;
+        padding:0;
+    }
 </style>
 
 <script type="text/javascript" src="{{asset('mdb/js/jquery-3.3.1.min.js')}}"></script>
@@ -118,13 +129,18 @@
 <script type="text/javascript" src="{{asset('mdb/js/addons/bootstrap-datepicker.js')}}"></script>
 
 <!-- Footer -->
-<footer class="page-footer fixed-bottom font-small bg-white">
+<footer class="fixed-bottom font-small main-footer">
 
     <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2019 Copyright:
-        <a href="https://mdbootstrap.com/education/bootstrap/"> {{config('app.name')}}</a>
+    <div class="footer-copyright text-center py-3">
+        <strong>Copyright &copy; 2020 <a href="http://www.trancite24.com">Trancite24 (Pvt) Ltd.</a></strong>
     </div>
-    <!-- Copyright -->
+    {{--<div class="pull-right hidden-xs">--}}
+        {{--Version 0.9.2--}}
+    {{--</div>--}}
+    {{--<!-- Default to the left -->--}}
+    {{--<strong>Copyright &copy; 2020 <a href="http://www.trancite24.com">Trancite24 (Pvt) Ltd.</a></strong>--}}
+    {{--<!-- Copyright -->--}}
 
 </footer>
 <!-- Footer -->

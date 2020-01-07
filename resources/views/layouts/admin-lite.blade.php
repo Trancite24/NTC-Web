@@ -132,15 +132,15 @@ desired effect
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="{{route('home')}}" class="logo" style="background-color: #84063A">
+        <a href="{{route('home')}}" class="logo" {{-- --}} style="background-color: #1a2226">
             <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>NTC</b>W</span>
+            <span class="logo-mini"><b>NTC</b>w</span>
             <!-- logo for regular state and mobile devices -->
             <span class="logo-lg"><b>NTC</b>Web</span>
         </a>
 
         <!-- Header Navbar -->
-        <nav class="navbar navbar-static-top" role="navigation" style="background-color: #84063A">
+        <nav class="navbar navbar-static-top" role="navigation" style="background-color: #1a2226">
             <!-- Sidebar toggle button-->
             <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                 <span class="sr-only">Toggle navigation</span>
@@ -267,7 +267,7 @@ desired effect
                         <i class="fa fa-dashboard fa-lg"></i> <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="{{ Route::is('mobile') ? 'active' : '' }}"><a href="{{route('mobile')}}"><i class="fa fa-mobile-phone fa-lg" style="font-size: 35px"></i> <span>Track Survey Data</span></a></li>
+                <li class="{{ Route::is('mobile') ? 'active' : '' }}"><a href="{{route('mobile')}}"><i class="fa fa-child fa-lg" style="font-size: 30px"></i> <span>Track Survey Data</span></a></li>
                 <li class="{{ Route::is('device') ? 'active' : '' }}"><a href="{{route('device')}}"><i class="fa fa-tint fa-rotate-180 fa-lg" style="font-size: 30px"></i> <span>Track GPS Data</span></a></li>
                 {{--<li class="treeview">--}}
                     {{--<a href="#"><i class="fa fa-gears fa-lg"></i> <span>Account Settings</span>--}}
@@ -329,10 +329,10 @@ desired effect
     <footer class="main-footer">
         <!-- To the right -->
         <div class="pull-right hidden-xs">
-            Version 0.9.1
+            Version 0.9.2
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2019 <a href="http://www.trancite24.com">Trancite24 (Pvt) Ltd.</a></strong>
+        <strong>Copyright &copy; 2020 <a href="http://www.trancite24.com">Trancite24 (Pvt) Ltd.</a></strong>
     </footer>
 
     <!-- Control Sidebar -->

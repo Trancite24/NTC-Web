@@ -6,6 +6,7 @@
         <div class="col-md-5">
             <form class="text-center border border-light p-5" method="POST" action="{{ route('login') }}">
                 @csrf
+                <img src="/images/ntc-logo.png" style="width:35%">
                 <p class="h4 mb-4">Sign in</p>
 
                 <!-- Email -->
@@ -40,7 +41,7 @@
                 </div>
 
                 <!-- Sign in button -->
-                <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
+                <button class="btn btn-primary btn-block my-4" type="submit">Sign in</button>
 
             </form>
         </div>
