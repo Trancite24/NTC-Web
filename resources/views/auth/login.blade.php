@@ -23,15 +23,15 @@
                         <strong>{{ $message }}</strong>
                     </span>
                 @enderror
-                <div class="d-flex justify-content-around">
-                    <div>
-                        <!-- Remember me -->
-                       <!--  <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                            <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
-                        </div> -->
-                    </div>
-                    <div>
+                <div class="d-flex flex-row-reverse">
+                    {{--<div>--}}
+                        {{--<!-- Remember me -->--}}
+                       {{--<!--  <div class="custom-control custom-checkbox">--}}
+                            {{--<input type="checkbox" class="custom-control-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>--}}
+                            {{--<label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>--}}
+                        {{--</div> -->--}}
+                    {{--</div>--}}
+                    <div class="p-2" style="font-size: 15px">
                         <!-- Forgot password -->
                         @if (Route::has('password.request'))
                             <a href="{{ route('password.request') }}">
