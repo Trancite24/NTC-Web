@@ -43,9 +43,9 @@ class MobileController extends Controller
             $query=$query->where('journeyId',$tripId);
         }
 
-        $query = $query->orderBy('record_no');
+//        $query = $query->orderBy('record_no');
 //        $res=$query->get();
-        // var_dump("test "+$routeId);
+//        var_dump("test "+$routeId);
         return json_encode([
 
         'nic'=>$query->select('nic')->distinct()->get(),
