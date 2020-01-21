@@ -13,7 +13,7 @@ class MobileController extends Controller
     public function mobilePage()
     {
 
-        //TODO get the unique nics, trip_ids, routes from database and set to the variables;
+//        TODO get the unique nics, trip_ids, routes from database and set to the variables;
         $nics= DB::Table('journey')->select('nic')->distinct()->get();
         $trip_ids = DB::Table('journey')->select('journeyId','fromName','toName')->distinct()->get();
         // $trip_ids =Journey::with('busstops')->select('journeyId')->distinct()->get();

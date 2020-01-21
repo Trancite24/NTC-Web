@@ -28,6 +28,11 @@ Route::middleware(['auth','userstate'])->group(function () {
 
     Route::get('/mobile/app','MobileController@mobilePage')->name('mobile');
     Route::get('/device/gps','DeviceController@GPSPage')->name('device');
+    Route::post('/mobile/app','MobileController@getJourneyDetails')->name('getJourney');
+    Route::post('/mobile/refresh','MobileController@refresh')->name('refresh');
+
+    Route::post('/device/refresh','DeviceController@refresh')->name('refreshGPS');
+    Route::post('/device/gps','DeviceController@refresh')->name('getJourneyGPS');
 
     Route::middleware(['superuser'])->group(function () {
 
@@ -36,6 +41,7 @@ Route::middleware(['auth','userstate'])->group(function () {
         Route::get('/admin/users', 'Auth\AccountController@viewUserForm')->name('viewUserForm');
         Route::get('/admin/users/activate/{inactive_user_id}', 'Auth\AccountController@activateUser')->name('activateUser');
         Route::get('/admin/users/suspend/{active_user_id}', 'Auth\AccountController@suspendUser')->name('suspendUser');
+
     });
 
     Route::get('/account/update_pass','Auth\UpdatePassController@getUpdatePasswordForm')->name('updatePasswordForm');
@@ -45,5 +51,6 @@ Route::middleware(['auth','userstate'])->group(function () {
     Route::post('/account/update_account','Auth\UpdateAccountController@updateAccount')->name('updateAccount');
 });
 
-Route::post('/mobile/app','MobileController@getJourneyDetails')->name('getJourney');
-Route::post('/mobile/refresh','MobileController@refresh')->name('refresh');
+
+
+

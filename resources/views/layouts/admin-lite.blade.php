@@ -20,6 +20,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{asset('admin-lte/bower_components/Ionicons/css/ionicons.min.css')}}">
+    <!-- Date Range Picker -->
+
+    <link rel="stylesheet" href="{{asset('admin-lte/bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
+
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('admin-lte/dist/css/AdminLTE.min.css')}}">
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
@@ -400,6 +404,8 @@ desired effect
 <script src="{{asset('admin-lte/bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('admin-lte/dist/js/adminlte.min.js')}}"></script>
+
+ <script  src="{{asset('admin-lte/bower_components/moment/moment.js')}}"></script>
 <script src="{{asset('admin-lte/bower_components/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
 <!-- bootstrap datepicker -->
 <script src="{{asset('admin-lte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
