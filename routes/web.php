@@ -32,7 +32,7 @@ Route::middleware(['auth','userstate'])->group(function () {
     Route::post('/mobile/refresh','MobileController@refresh')->name('refresh');
 
     Route::post('/device/refresh','DeviceController@refresh')->name('refreshGPS');
-    Route::post('/device/gps','DeviceController@refresh')->name('getJourneyGPS');
+    Route::post('/device/gps','DeviceController@getJourneyData')->name('getJourneyGPS');
 
     Route::middleware(['superuser'])->group(function () {
 
@@ -50,7 +50,3 @@ Route::middleware(['auth','userstate'])->group(function () {
     Route::get('/account/update_account','Auth\UpdateAccountController@getUpdateAccountForm')->name('updateAccountForm');
     Route::post('/account/update_account','Auth\UpdateAccountController@updateAccount')->name('updateAccount');
 });
-
-
-
-

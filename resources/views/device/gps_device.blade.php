@@ -62,19 +62,36 @@
                 </div>
             </div>
             </div>
+        {{--<div class="col-md-1">--}}
+            {{--<div class="form-group no-bottom-margin">--}}
+                {{--<button  style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="preview" class="btn btn-info">Visualize</button>--}}
+            {{--</div>--}}
+            <a class="btn btn-app btn-app-2" id="preview">
+                <i class="fa fa-eye"></i> Visualize
+            </a>
+        {{--</div>--}}
+        {{--<div class="col-md-1">--}}
+            {{--<div class="form-group no-bottom-margin">--}}
+                {{--<button style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="exportCSV" class="btn btn-info">Download</button>--}}
+            {{--</div>--}}
+            <a class="btn btn-app btn-app-2" id="exportCSV">
+                <i class="fa fa-download"></i> Download
+            </a>
+        {{--</div>--}}
+        {{--<div class="col-md-1">--}}
+            {{--<div class="form-group no-bottom-margin">--}}
+                {{--<button style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="resetFilters" class="btn btn-info">Reset</button>--}}
+                <a class="btn btn-app btn-app-2" id="resetFilters">
+                    <i class="fa fa-repeat"></i> Reset
+                </a>
+            {{--</div>--}}
+        {{--</div>--}}
         <div class="col-md-1">
-            <div class="form-group no-bottom-margin">
-                <button  style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="preview" class="btn btn-info">Visualize</button>
-            </div>
-        </div>
-        <div class="col-md-1">
-            <div class="form-group no-bottom-margin">
-                <button style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="exportCSV" class="btn btn-info">Download</button>
-            </div>
-        </div>
-        <div class="col-md-1">
-            <div class="form-group no-bottom-margin">
-                <button style="width: 80px; height: 50px; margin-left: 5px; margin-top: 6px" id="resetFilters" class="btn btn-info">Reset</button>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-toggle="toggle" id="busstops">
+                    Busstops
+                </label>
             </div>
         </div>
     </div>
@@ -168,6 +185,20 @@
         .content{
             padding-top: 0px;
         }
+        .btn-app-2{
+            border-radius: 3px;
+            position: relative;
+            padding: 10px 10px;
+            margin: 0 0 5px 5px;
+            margin-top: 5px;
+            min-width: 70px;
+            height: 50px;
+            text-align: center;
+            color: #666;
+            border: 1px solid #ddd;
+            background-color: #00c0ef;
+            font-size: 12px;
+        }
     </style>
 
 @endsection
@@ -183,6 +214,7 @@
             autoclose: true
         })  --}}
         var nic,route,journey_id,startDate,endDate = null;
+        var busstops = false;
         $('.select2').select2();
 
         $('#daterange-btn').daterangepicker(
@@ -199,12 +231,12 @@
                 endDate  : moment()
             },
             function (start, end) {
-                $('#daterange-btn span').html(start.format('D/MM/YYYY') + ' - ' + end.format('D/MM/YYYY'))
-                startDate = start._d;
-                endDate = end._d;
-                console.log(startDate,endDate);
-                $("#daterange-btn").prop("disabled", true);
-                refreshParameters();
+                // $('#daterange-btn span').html(start.format('D/MM/YYYY') + ' - ' + end.format('D/MM/YYYY'))
+                // startDate = start._d;
+                // endDate = end._d;
+                // console.log(startDate,endDate);
+                // $("#daterange-btn").prop("disabled", true);
+                // refreshParameters();
             }
         );
         var map;
@@ -251,9 +283,20 @@
            refreshParameters(clear=true);
         });
         $('#daterange-btn').on('apply.daterangepicker', function(ev, picker) {
-            console.log(picker.startDate.format('YYYY-MM-DD'));
-            console.log(picker.endDate.format('YYYY-MM-DD'));
+
+            startDate = picker.startDate._d;
+            endDate = picker.endDate._d;
+            $('#daterange-btn span').html(picker.startDate.format('D/MM/YYYY') + ' - ' + picker.endDate.format('D/MM/YYYY'))
+            console.log(startDate,endDate);
+            $("#daterange-btn").prop("disabled", true);
+            refreshParameters();
         });
+        $('#busstops').change(function() {
+            console.log('Toggle: ' + $(this).prop('checked'))
+            busstops = $(this).prop('checked');
+        })
+
+
         function refreshParameters(clear){
 
             if($('#route').val()!='Route'){
@@ -287,21 +330,19 @@
             myFunction();
                 {{--  alert(nic+" "+routeId+" "+date)  --}}
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            console.log({_token: CSRF_TOKEN,nic:nic,route:route,journey_id:journey_id,start_date:startDate,end_date:endDate})
+            console.log({_token: CSRF_TOKEN,nic:nic,route:route,journey_id:journey_id,start_date:startDate,end_date:endDate,busstops:busstops});
             $.ajax({
                 /* the route pointing to the post function */
                 url: '/device/refresh',
                 type: 'POST',
                 /* send the csrf-token and the input to the controller ,trip_id:trip_id */
-                data: {_token: CSRF_TOKEN,nic:nic,route:route,journey_id:journey_id,start_date:startDate,end_date:endDate},
+                data: {_token: CSRF_TOKEN,nic:nic,route:route,journey_id:journey_id,start_date:startDate,end_date:endDate,busstops:busstops},
                 dataType: 'JSON',
                 /* remind that 'data' is the response of the AjaxController */
                 success: function (data) {
-                    data=data
-                    console.log(data)
-                    journeyList=data["trips"];
-                    console.log("This is journey list")
-                    console.log(journeyList);
+                    var data=data
+                    console.log("data");
+                    console.log(data);
 
                     var nics = [{id:'Surveyors NIC',text:'Surveyors NIC'}];
                     var routes = [{id:'Route',text:'Route'}];
@@ -347,13 +388,14 @@
                 },
                 error:function (jqXHR, textStatus, errorThrown) {
                     alert("We got an error processing the request")
+                    console.log(jqXHR);
                 }
             });
         };
 
         $('#preview').click(function () {
             //deleteMarkers()
-            if(nic==null || route==null || journey_id == null ){
+            if(nic==null && route==null && journey_id && null ){
                 $('#parameters-error-modal').modal('show');
             }
             else{
@@ -365,30 +407,63 @@
         function preview() {
             document.getElementById("loader").style.display = "block";
             {{--  myVar = setTimeout(showMap, 1200);  --}}
-            myFunction()
+            myFunction();
 
                 {{--  alert(nic+" "+routeId+" "+date)  --}}
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-            console.log({_token: CSRF_TOKEN,nic:nic,route:route,journey_id:journey_id,start_date:startDate,end_date:endDate})
+            console.log({_token: CSRF_TOKEN,nic:nic,route:route,journey_id:journey_id,start_date:startDate,end_date:endDate,busstops:busstops})
             $.ajax({
                 /* the route pointing to the post function */
-                url: '/device/refresh',
+                url: '/device/gps',
                 type: 'POST',
                 /* send the csrf-token and the input to the controller ,trip_id:trip_id */
-                data: {_token: CSRF_TOKEN,nic:nic,route:route,journey_id:journey_id,start_date:startDate,end_date:endDate},
+                data: {_token: CSRF_TOKEN,nic:nic,route:route,journey_id:journey_id,start_date:startDate,end_date:endDate,busstops:busstops},
                 dataType: 'JSON',
                 /* remind that 'data' is the response of the AjaxController */
                 success: function (data) {
-                    data=data
-                    console.log(data)
-                    journeyList=data["trips"];
+                    var data=data;
+                    console.log(data);
 
                 },
                 error:function (jqXHR, textStatus, errorThrown) {
-                    alert("We got an error processing the request")
+                    alert("We got an error processing the request");
+                    console.log(jqXHR);
                 },
             });
 
+        }
+
+        function addMarker(loc) {
+            var marker = new google.maps.Marker({
+                position: {lat: parseFloat(loc["lat"]), lng: parseFloat(loc["lon"])},
+                icon:"/images/marker.ico",
+                map: map
+            });
+            if( typeof loc["busStopTypenone"]==='undefined'){
+                var busstoptype="-"
+            }
+            var timeStamp= new Date(parseInt(loc["timeStamp"]))
+            var updatedTime=new Date(parseInt(loc["updatedTime"]))
+            infowindow = new google.maps.InfoWindow({
+                content: '<p><strong>Bus Stop Type</strong>: '+busstoptype+'<br/>'
+                +'<strong>bus stop Id</strong>: '+loc["busstopId"]+'<br/>'
+                +'<strong>female Child In</strong>: '+loc["femaleChildIn"]+'<br/>'
+                +'<strong>female Child Out</strong> :'+loc["femaleChildOut"]+'<br/>'
+                +'<strong>female Elder In</strong>: '+loc["femaleElderIn"]+'<br/>'
+                +'<strong>female Elder Out</strong>: '+loc["femaleElderOut"]+'<br/>'
+                +'<strong>female Woman In</strong>: '+loc["femaleWomanIn"]+'<br/>'
+                +'<strong>female Woman Out</strong>: '+loc["femaleWomanOut"]+'<br/>'
+                +'<strong>female Young In</strong>: '+loc["femaleYoungIn"]+'<br/>'
+                +'<strong>female Young Out</strong>: '+loc["femaleYoungOut"]+'<br/>'
+                +'<strong>in Total</strong>: '+loc["inTotal"]+'<br/>'
+                +'<strong>journey Id</strong>: '+loc["journeyId"]+'<br/>'
+                +'<strong>lat</strong>: '+loc["lat"]+'<br/>'
+                +'<strong>lon</strong>: '+loc["lon"]+'<br/>'+'</p>'
+            });
+            marker.addListener('click', function() {
+                infowindow.open(map, marker);
+            });
+            markers.push(marker);
         }
     </script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
