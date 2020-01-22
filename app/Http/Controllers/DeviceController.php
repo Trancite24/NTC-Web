@@ -94,7 +94,7 @@ class DeviceController extends Controller
             $journeyQuery->where('nic','=',$nic);
         }
         if ($journeyID != null){
-            $journeyQuery->where('journeyId','=',$journeyID);
+            $journeyQuery->where('DEVICE_JOURNEY_INFO.journeyId','=',$journeyID);
         }
         if ($fromDate != null){
             $journeyQuery->whereDate('date','>=',$fromDate);

@@ -213,7 +213,7 @@
         {{--  $('#datepicker').datepicker({
             autoclose: true
         })  --}}
-        var nic,route,journey_id,startDate,endDate = null;
+        var nic,route,journey_id,startDate,endDate,journeys = null;
         var busstops = false;
         $('.select2').select2();
 
@@ -294,7 +294,11 @@
         $('#busstops').change(function() {
             console.log('Toggle: ' + $(this).prop('checked'))
             busstops = $(this).prop('checked');
-        })
+        });
+
+        $('#exportCSV').click(function () {
+           exportCSV();
+        });
 
 
         function refreshParameters(clear){
@@ -400,7 +404,7 @@
             }
             else{
                 console.log("loading preview")
-                preview()
+                preview();
             }
         });
 
@@ -410,6 +414,12 @@
             myFunction();
 
                 {{--  alert(nic+" "+routeId+" "+date)  --}}
+            getJourneyData(function () {
+                    console.log(journeys);
+                })
+        }
+        function getJourneyData(cb) {
+
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             console.log({_token: CSRF_TOKEN,nic:nic,route:route,journey_id:journey_id,start_date:startDate,end_date:endDate,busstops:busstops})
             $.ajax({
@@ -421,16 +431,48 @@
                 dataType: 'JSON',
                 /* remind that 'data' is the response of the AjaxController */
                 success: function (data) {
-                    var data=data;
-                    console.log(data);
-
+                    journeys=data;
+                    // console.log(data);
+                    cb();
                 },
                 error:function (jqXHR, textStatus, errorThrown) {
                     alert("We got an error processing the request");
                     console.log(jqXHR);
                 },
             });
+        }
 
+        function exportCSV() {
+
+            getJourneyData(function () {
+
+                const items = journeys.journeys;
+                const replacer = (key, value) => value === null ? '' : value // specify how you want to handle null values here
+                const header = Object.keys(items[0])
+                let csv = items.map(row => header.map(fieldName => JSON.stringify(row[fieldName], replacer)).join(','))
+                csv.unshift(header.join(','));
+                csv = csv.join('\r\n');
+
+                console.log(csv);
+
+                document.getElementById("loader").style.display = "block";
+                // myVar = setTimeout(showMap, 1000);
+
+                if (navigator.msSaveBlob) { // IE 10+
+                    var blob = new Blob([csv], {type: 'text/plain'});
+                    console.log("Internet Explorer detected");
+                    navigator.msSaveBlob(blob, 'data.csv');
+                }
+                else {
+                    var link = document.createElement('a');
+                    link.download = 'data.csv';
+                    var blob = new Blob([csv], {type: 'text/plain'});
+                    link.href = window.URL.createObjectURL(blob);
+                    link.click();
+                }
+                document.getElementById("loader").style.display = "none";
+
+            })
         }
 
         function addMarker(loc) {
