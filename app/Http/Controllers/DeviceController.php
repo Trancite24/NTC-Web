@@ -80,7 +80,7 @@ class DeviceController extends Controller
         $journeyID = $request->journey_id;
         $fromDate = $request->start_date;
         $toDate = $request->end_date;
-        $isBusStop = $request->busstop;
+        $isBusStop = $request->busstops;
 
         $fromDate = date_create_from_format('D M d Y H:i:s e+',$fromDate);
         $toDate = date_create_from_format('D M d Y H:i:s e+',$toDate);
@@ -103,8 +103,8 @@ class DeviceController extends Controller
             $journeyQuery->whereDate('date','<=',$toDate);
         }
 
-        if ($isBusStop != null){
-            $journeyQuery->where('isBusStop','=',$isBusStop);
+        if ($isBusStop == "true"){
+            $journeyQuery->where('isBusStop','=',"1");
         }
         $results = $journeyQuery->get();
 

@@ -280,7 +280,10 @@
         });
 
         $('#resetFilters').click(function () {
+            deleteMarkers()
+            document.getElementById("loader1").style.display = "block";
            refreshParameters(clear=true);
+            //
         });
         $('#daterange-btn').on('apply.daterangepicker', function(ev, picker) {
 
@@ -345,8 +348,8 @@
                 /* remind that 'data' is the response of the AjaxController */
                 success: function (data) {
                     var data=data
-                    console.log("data");
-                    console.log(data);
+                    // console.log("data");
+                    // console.log(data);
 
                     var nics = [{id:'Surveyors NIC',text:'Surveyors NIC'}];
                     var routes = [{id:'Route',text:'Route'}];
@@ -366,10 +369,6 @@
                         var route = data.routes[i];
                         routes.push({id:route.routeNo,text:route.routeNo +" - " + route.fromName + " to " + route.toName})
                     }
-                    console.log(nics);
-                    console.log(routes);
-                    console.log(journeys);
-
                     if(!$('#nic').is(':disabled')){
                         $('#nic').empty()
                         $('#nic').select2({
@@ -388,6 +387,7 @@
                             data : journeys
                         })
                     }
+                    document.getElementById("loader1").style.display = "none"; //http://localhost:8000/device/gps
 
                 },
                 error:function (jqXHR, textStatus, errorThrown) {
@@ -396,28 +396,19 @@
                 }
             });
         };
-
+        function stopLoader(){
+            document.getElementById("loader1").style.display = "none";
+        }
         $('#preview').click(function () {
-            //deleteMarkers()
+            deleteMarkers()
+            document.getElementById("loader1").style.display = "block";
             if(nic==null && route==null && journey_id && null ){
                 $('#parameters-error-modal').modal('show');
             }
             else{
-                console.log("loading preview")
-                preview();
+                preview(stopLoader);
             }
         });
-
-        function preview() {
-            document.getElementById("loader").style.display = "block";
-            {{--  myVar = setTimeout(showMap, 1200);  --}}
-            myFunction();
-
-                {{--  alert(nic+" "+routeId+" "+date)  --}}
-            getJourneyData(function () {
-                    console.log(journeys);
-                })
-        }
         function getJourneyData(cb) {
 
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -453,7 +444,7 @@
                 csv.unshift(header.join(','));
                 csv = csv.join('\r\n');
 
-                console.log(csv);
+                // console.log(csv);
 
                 document.getElementById("loader").style.display = "block";
                 // myVar = setTimeout(showMap, 1000);
@@ -475,8 +466,21 @@
             })
         }
 
+        // All the below functions are added to facilitate google map marking
+
+        function preview(cb) {
+            myFunction();
+            getJourneyData(function () {
+                var journeyList =  journeys["journeys"];
+                map.panTo({lat:parseFloat(journeyList[0]['lat']), lng: parseFloat(journeyList[0]['lon']) })
+                for( j = 0; j<journeyList.length; j++){
+                        markMap(journeyList[j])
+                }
+                cb();
+            })
+        }
         function addMarker(loc) {
-            var marker = new google.maps.Marker({
+            let marker = new google.maps.Marker({
                 position: {lat: parseFloat(loc["lat"]), lng: parseFloat(loc["lon"])},
                 icon:"/images/marker.ico",
                 map: map
@@ -485,20 +489,15 @@
                 var busstoptype="-"
             }
             var timeStamp= new Date(parseInt(loc["timeStamp"]))
-            var updatedTime=new Date(parseInt(loc["updatedTime"]))
-            infowindow = new google.maps.InfoWindow({
-                content: '<p><strong>Bus Stop Type</strong>: '+busstoptype+'<br/>'
-                +'<strong>bus stop Id</strong>: '+loc["busstopId"]+'<br/>'
-                +'<strong>female Child In</strong>: '+loc["femaleChildIn"]+'<br/>'
-                +'<strong>female Child Out</strong> :'+loc["femaleChildOut"]+'<br/>'
-                +'<strong>female Elder In</strong>: '+loc["femaleElderIn"]+'<br/>'
-                +'<strong>female Elder Out</strong>: '+loc["femaleElderOut"]+'<br/>'
-                +'<strong>female Woman In</strong>: '+loc["femaleWomanIn"]+'<br/>'
-                +'<strong>female Woman Out</strong>: '+loc["femaleWomanOut"]+'<br/>'
-                +'<strong>female Young In</strong>: '+loc["femaleYoungIn"]+'<br/>'
-                +'<strong>female Young Out</strong>: '+loc["femaleYoungOut"]+'<br/>'
-                +'<strong>in Total</strong>: '+loc["inTotal"]+'<br/>'
-                +'<strong>journey Id</strong>: '+loc["journeyId"]+'<br/>'
+            let infowindow = new google.maps.InfoWindow({
+                content:
+                '<strong>Route No</strong>: '+loc["routeNo"]+'<br/>'
+                +'<strong>From Name</strong>: '+loc["fromName"]+'<br/>'
+                +'<strong>To Name</strong> :'+loc["toName"]+'<br/>'
+                +'<strong>NIC</strong>: '+loc["nic"]+'<br/>'
+                +'<strong>Device  Id</strong>: '+loc["deviceId"]+'<br/>'
+                +'<strong>Velocity</strong>: '+loc["velocity"]+'<br/>'
+                +'<strong>Time Stamp</strong>: '+timeStamp+'<br/>'
                 +'<strong>lat</strong>: '+loc["lat"]+'<br/>'
                 +'<strong>lon</strong>: '+loc["lon"]+'<br/>'+'</p>'
             });
@@ -506,6 +505,24 @@
                 infowindow.open(map, marker);
             });
             markers.push(marker);
+        }
+        function markMap(markerDetails){
+            addMarker(markerDetails);
+        }
+        function deleteMarkers() {
+            clearMarkers();
+            markers = [];
+        }
+        // Sets the map on all markers in the array.
+        function setMapOnAll(map) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+
+        // Removes the markers from the map, but keeps them in the array.
+        function clearMarkers() {
+            setMapOnAll(null);
         }
     </script>
     <meta name="csrf-token" content="{{ csrf_token() }}" />

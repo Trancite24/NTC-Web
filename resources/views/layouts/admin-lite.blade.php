@@ -68,7 +68,7 @@ desired effect
 <body  onload="myFunction()" style="margin:0;" class="hold-transition skin-blue sidebar-mini">
  <style>
         /* Center the loader */
-        #loader {
+        .loader {
         position: absolute;
         left: 50%;
         top: 50%;
@@ -394,7 +394,8 @@ desired effect
     immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
 </div>
-<div id="loader"></div>
+<div id="loader" class="loader"></div>
+<div id="loader1" class="loader" style="display: none"></div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->

@@ -191,7 +191,7 @@
 
     //button reset filters
     $("#resetFilters").click(function(){
-
+        document.getElementById("loader1").style.display = "block";
         $("#nic").val("Surveyors NIC")
         $("#trip_id").val("Trip Id")
        $("#date").val("Date")
@@ -204,7 +204,9 @@
 
          deleteMarkers()
          addDefaults()
-         resetFilters()
+         resetFilters(function(){
+             document.getElementById("loader1").style.display = "none";
+         })
 
 
     });
@@ -303,7 +305,7 @@
     }
            {{--  icon:"public/images/bus.png",  --}}
     function addMarker(loc) {
-        var marker = new google.maps.Marker({
+        let marker = new google.maps.Marker({
         position: {lat: parseFloat(loc["lat"]), lng: parseFloat(loc["lon"])},
         icon:"/images/marker.ico",
         map: map
@@ -313,7 +315,7 @@
         }
         var timeStamp= new Date(parseInt(loc["timeStamp"]))
         var updatedTime=new Date(parseInt(loc["updatedTime"]))
-        infowindow = new google.maps.InfoWindow({
+        let infowindow = new google.maps.InfoWindow({
             content: '<p><strong>Bus Stop Type</strong>: '+busstoptype+'<br/>'
                     +'<strong>bus stop Id</strong>: '+loc["busstopId"]+'<br/>'
                     +'<strong>female Child In</strong>: '+loc["femaleChildIn"]+'<br/>'
@@ -461,8 +463,8 @@
             resetFilters()
         }
         else{
-            console.log(trip_id)
-            console.log(journeyList)
+            // console.log(trip_id)
+            // console.log(journeyList)
             var cLat= parseFloat(journeyList[0]["busstops"][0]["lat"])
             var cLon=parseFloat(journeyList[0]["busstops"][0]["lon"])
             map.panTo({lat:cLat, lng: cLon })
@@ -566,10 +568,10 @@
 
                     showMap()
                     data=data
-                    console.log(data)
+                    // console.log(data)
                     journeyList=data["trips"]
-                    console.log("This is journey list")
-                    console.log(journeyList)
+                    // console.log("This is journey list")
+                    // console.log(journeyList)
                     if(!$('#nic').is(':disabled')){
                             changeNic(data)
                     }
@@ -648,8 +650,7 @@
                 document.getElementById('nic').appendChild(opt);
             }
         }
-        function resetFilters(){
-             document.getElementById("loader").style.display = "block";
+        function resetFilters(cb){
             var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
             $("#date").prop("disabled", false);
             $("#trip_id").prop("disabled", false);
@@ -710,6 +711,7 @@
                           opt.value=data["trips"][j]["journeyId"]
                           document.getElementById('trip_id').appendChild(opt);
                     }
+                    cb();
                     {{--  callback;  --}}
                 }
             });
