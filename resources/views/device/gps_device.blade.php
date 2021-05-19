@@ -489,7 +489,6 @@
                 var busstoptype="-"
             }
             var timeStamp= new Date(parseInt(loc["timeStamp"]))
-            var updatedTime=new Date(parseInt(loc["updatedTime"]))
             let infowindow = new google.maps.InfoWindow({
                 content:
                 '<strong>Route No</strong>: '+loc["routeNo"]+'<br/>'
